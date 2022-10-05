@@ -1,8 +1,8 @@
 import { createI18n } from 'vue-i18n';
-import messages from 'src/i18n';
+import messages from '@/i18n';
 
 const instanceI18n = createI18n({
-	locale: 'fr-FR',
+	locale: 'en-US',
 	messages
 })
 
