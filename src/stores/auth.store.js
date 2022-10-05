@@ -23,7 +23,7 @@ export const authStore = defineStore('auth', {
 				const data = res?.data;
 
 				if(data) {
-					setAuthorizationBearer(data?.access_token);
+          localStorage.token = data?.access_token;
 				}
 			})
 		},
@@ -37,6 +37,8 @@ export const authStore = defineStore('auth', {
 
 			const userStore = useUserStore();
 			userStore.setUser(res.data);
+      setAuthorizationBearer(localStorage.token);
+      this.isAuth = true;
 
 			const user = res.data;
 		},

@@ -13,7 +13,7 @@ const routes = [
             },
             {
                 path: "/signup",
-                component: () => import("../pages/guest/SingUpPage.vue"),
+                component: () => import("../pages/guest/SignUpPage.vue"),
 
             }
         ],

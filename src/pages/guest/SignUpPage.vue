@@ -15,10 +15,10 @@
         <div class="flex justify-center self-center  z-10">
             <div class="p-12 bg-white mx-auto rounded-3xl w-96 ">
                 <div class="mb-7">
-                    <h3 class="font-semibold text-2xl text-gray-800">{{$t("signup.signin")}} </h3>
-                    <p class="text-gray-400">{{$t("signup.account_not_existing")}}
-                        <router-link to="/signup" class="text-sm text-purple-700 hover:text-purple-700">
-                            {{$t("signup.signup")}}
+                    <h3 class="font-semibold text-2xl text-gray-800">{{$t("signup.signup")}} </h3>
+                    <p class="text-gray-400">{{$t("signup.account_existing")}}
+                        <router-link to="/login" class="text-sm text-purple-700 hover:text-purple-700">
+                            {{$t("signup.signin")}}
                         </router-link>
                     </p>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="">
                         <input
                             class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
-                            type="" :placeholder='$t("signup.user")' v-model="username">
+                            type="" :placeholder='$t("signup.user")' v-model="mail">
                     </div>
 
 
@@ -35,9 +35,9 @@
                             class="text-sm  px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400">
                     </div>
                     <div>
-                        <button type="submit" @click="signIn"
+                        <button type="submit" @click="signUp"
                             class="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500">
-                            {{$t("signup.signin")}}
+                            {{$t("signup.signup")}}
                         </button>
                     </div>
 
@@ -62,22 +62,22 @@ export default defineComponent({
     setup() {
         const authStore = useAuthStore();
 
-        const username = ref("");
+        const mail = ref("");
         const password = ref("");
 
-        const signIn = () => {
-            authStore.login(username.value, password.value);
+        const signUp = () => {
+            authStore.signup(mail.value, password.value);
             console.log("signed");
         }
 
         return {
-            signIn,
-            username,
+            signUp,
+            mail,
             password,
         }
     }
-
 })
+
 </script>
 
 
