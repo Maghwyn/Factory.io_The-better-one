@@ -1,13 +1,5 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
-import { useUserStore } from '@/stores/user.store';
-
-import {
-	tryLogin,
-	trySignUp,
-	getUserInfo,
-	setAuthorizationBearer,
-} from "@/API/auth.req.js";
 
 const authStoreDefaultState = () => {
 	return {
@@ -34,13 +26,12 @@ export const useAuthStore = defineStore('auth', {
 				.catch(err => console.log(err.response.data))
 		},
 		async fetchUserInfo() {
-			setAuthorizationBearer(localStorage.token);
-			
 			const res = await getUserInfo();
 			if(res?.status !== 201) return;
 
 			const userStore = useUserStore();
 			userStore.setUser(res.data);
+			setAuthorizationBearer(localStorage.token);
 			this.isAuth = true;
 		},
 		reset(keys) {

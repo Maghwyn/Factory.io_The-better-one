@@ -25,12 +25,11 @@ export default defineComponent({
 
     if (localStorage.token !== undefined) {
       console.log(isAuth.value)
-      authStore.setAuth(true)
+      authStore.fetchUserInfo();
       console.log(isAuth.value)
       console.log("Automatically connected")
     }
     else {
-      authStore.setAuth(false)
       console.log("Not connected")
       router.push('/login');
     }
