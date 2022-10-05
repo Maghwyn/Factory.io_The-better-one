@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import OverlayComp from '../utils/OverlayComp.vue';
+import OverlayComp from '@/components/utils/OverlayComp.vue';
 import { ref } from "vue";
 import RessourcesEditForm from './RessourcesEditForm.vue';
 
