@@ -22,7 +22,7 @@ export const useAdminStore = defineStore('admin', {
 		},
 		getAllUsers() {
 			tryGetAllUsers().then(res => {
-				console.log(res.data);
+				this.users = res.data
 			})
 		},
 		createRessource(ressource) {
