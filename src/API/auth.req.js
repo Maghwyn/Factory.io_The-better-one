@@ -1,8 +1,4 @@
-import axios from "axios";
-
-const http = axios.create({
-	baseURL: "https://apigame.co",
-})
+import { http } from "./axios.config";
 
 export const setAuthorizationBearer = (jwt) => {
 	http.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;

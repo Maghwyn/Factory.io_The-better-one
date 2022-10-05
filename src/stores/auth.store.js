@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
 			setAuthorizationBearer(localStorage.token);
 			
 			const res = await getUserInfo();
-			if(res?.status !== 201) return;
+			if(res?.response !== undefined) return;
 
 			const userStore = useUserStore();
 			userStore.setUser(res.data);

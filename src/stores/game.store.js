@@ -1,43 +1,40 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
+import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, levelUpOneFactory } from '@/API/factory.req';
 
-const authStoreDefaultState = () => {
+const gameStoreDefaultState = () => {
 	return {
-		username: "",
-		isAuth: false,
+		
 	}
 }
 
-export const useAuthStore = defineStore('auth', {
-	state: () => authStoreDefaultState(),
+export const useGameStore = defineStore('game', {
+	state: () => gameStoreDefaultState(),
 	actions: {
-		setAuth(status) {
-			this.isAuth = status;
+		async createFactory() {
+			// TODO
+			await createOneFactory(null);
 		},
-		async login(username, password) {
-			await tryLogin(username, password).then((res) => {
-				if(res?.data) {
-					localStorage.token = res.data?.access_token;
-				}
-			})
+		async getAllFactories() {
+			// TODO
+			await getAllFactories();
 		},
-		async signup(username, password) {
-			await trySignUp(username, password)
-				.catch(err => console.log(err.response.data))
+		async getSingleFactory() {
+			// TODO
+			await getOneFactory(null);
 		},
-		async fetchUserInfo() {
-			const res = await getUserInfo();
-			if(res?.status !== 201) return;
-
-			const userStore = useUserStore();
-			userStore.setUser(res.data);
-			setAuthorizationBearer(localStorage.token);
-			this.isAuth = true;
+		async deleteFactory() {
+			// TODO
+			await deleteOneFactory(null);
+		},
+		async factoryLevelUp() {
+			// TODO
+			await levelUpOneFactory(null);
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
-				? pick(authStoreDefaultState(), keys)
-				: authStoreDefaultState() // if no keys provided, reset all
+				? pick(gameStoreDefaultState(), keys)
+				: gameStoreDefaultState() // if no keys provided, reset all
 			);
 		}
 	}
