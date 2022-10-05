@@ -16,6 +16,13 @@ const routes = [
 			{ path: "market", component: () => import("../pages/main/MarketPage.vue") },
 		]
 	}
+  {
+    path: "/admin",
+    component: () => import("../layouts/AdminLayout.vue"),
+    children: [
+      { path: "", component: () => import("../pages/admin/DashboardPage.vue") },
+    ]
+  }
 ]
 
 export default routes;
