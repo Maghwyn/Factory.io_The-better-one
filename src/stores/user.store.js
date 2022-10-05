@@ -18,6 +18,7 @@ export const useUserStore = defineStore('auth', {
 	actions: {
 		setUser(user) {
 			this.user = { ...user };
+			console.log(this.user)
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
