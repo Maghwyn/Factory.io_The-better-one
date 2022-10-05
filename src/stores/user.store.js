@@ -20,7 +20,6 @@ export const useUserStore = defineStore('user', {
 	actions: {
 		setUser(user) {
 			this.user = { ...user };
-			console.log("User ::", this.user)
 		},
 		async getMyInventory() {
 			const res = await getOneInventory();
