@@ -1,5 +1,9 @@
 <template>
-    <div>
-        <router-view></router-view>
-    </div>
+	<div class="view">
+		<header>HEADER</header>
+
+		<router-view></router-view>
+
+		<footer>FOOTER</footer>
+	</div>
 </template>
