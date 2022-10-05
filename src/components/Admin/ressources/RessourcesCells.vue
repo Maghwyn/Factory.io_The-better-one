@@ -44,7 +44,7 @@ import { useAdminStore } from '@/stores/admin.store';
 import { computed, ref } from "vue";
 import RessourcesCard from './RessourcesCard.vue';
 import RessourcesForm from './RessourcesForm.vue';
-import OverlayComp from '../utils/OverlayComp.vue';
+import OverlayComp from '@/components/utils/OverlayComp.vue';
 
 export default {
 	components: {
