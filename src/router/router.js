@@ -23,12 +23,12 @@ const routes = [
         component: () => import("../layouts/MainLayout.vue"),
         children: [
             {
-                path: "/game",
+                path: "game",
                 component: () => import("../pages/main/GamePage.vue"),
 
             },
             {
-                path: "/market",
+                path: "market",
                 component: () => import("../pages/main/MarketPage.vue"),
             }           
         ]
