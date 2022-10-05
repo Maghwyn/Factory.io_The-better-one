@@ -29,7 +29,7 @@ export const useUserStore = defineStore('user', {
 			const userInventory = res.data;
 			if(!userInventory) return;
 
-			this.inventory = this.inventory;
+			this.inventory = userInventory;
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length

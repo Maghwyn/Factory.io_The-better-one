@@ -1,7 +1,6 @@
 import { http } from "./axios.config";
 
 export const createOneResource = async (resourceName, imageUrl, baseValue) => {
-	console.log(resourceData);
 	return await http.post('/resources', {
 		name: resourceName,
 		image_url: imageUrl,
