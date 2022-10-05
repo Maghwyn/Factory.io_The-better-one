@@ -10,6 +10,8 @@ export default {
 		signup: "Sign Up",
 		account_existing : "Already have an account ?  ",
 		signin : "Sign In",
-		account_not_existing:"Don't have an account yet ?"
+		account_not_existing:"Don't have an account yet ?",
+		user: "Username",
+		password:"Password",
 	},
 }

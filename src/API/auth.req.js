@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const http = axios.create({
-	baseURL: "https://apigame.co",
+	baseURL: "http://apigame.co",
+	headers: {
+        "Content-Type": "application/json"
+    }
 })
 
 export const tryLogin = async (username, password) => {

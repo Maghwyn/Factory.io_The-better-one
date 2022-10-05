@@ -1,8 +1,7 @@
 <template>
     <!-- component -->
     <div
-        class="bg-purple-900 absolute top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 bottom-0 leading-5 h-full w-full overflow-hidden">
-
+        class="bg-red-900 absolute top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-red-800 bottom-0 leading-5 h-full w-full overflow-hidden">
     </div>
     <div class="relative   min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl">
         <div class="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-md  z-10">
@@ -27,12 +26,12 @@
                     <div class="">
                         <input
                             class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
-                            type="" placeholder="Email" v-model="mail">
+                            type="" :placeholder='$t("signup.user")' v-model="mail">
                     </div>
 
 
                     <div class="relative" x-data="{ show: False }">
-                        <input placeholder="Password" type='password' v-model="password"
+                        <input :placeholder='$t("signup.password")' type='password' v-model="password"
                             class="text-sm  px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400">
                     </div>
                     <div>
@@ -56,23 +55,28 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth.store'
+import { ref, defineComponent } from 'vue';
 
-export default {
-    data() {
-        return {
-            mail: "",
-            password: "",
+export default defineComponent({
+    setup() {
+        const authStore = useAuthStore();
+
+        const mail = ref("");
+        const password = ref("");
+
+        const signUp = () => {
+            authStore.signup(mail.value, password.value);
+            console.log("signed");
         }
-    },
-    methods: {
-        signUp() {
-            //store.signup(username, password)
-            console.log(this.password)
-            console.log(this.mail)
+
+        return {
+            signUp,
+            mail,
+            password,
         }
     }
-}
-
+})
 
 </script>
 
