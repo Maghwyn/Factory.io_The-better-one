@@ -1,9 +1,8 @@
 import { http } from "./axios.config";
 
-export const createOneFactory = async (factoryData) => {
-	console.log(factoryData);
+export const createOneFactory = async (factoryModelId) => {
 	return await http.post('/factories', {
-
+		factory_model: factoryModelId,
 	})
 };
 

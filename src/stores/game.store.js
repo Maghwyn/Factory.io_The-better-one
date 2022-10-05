@@ -11,25 +11,48 @@ const gameStoreDefaultState = () => {
 export const useGameStore = defineStore('game', {
 	state: () => gameStoreDefaultState(),
 	actions: {
-		async createFactory() {
-			// TODO
-			await createOneFactory(null);
+		async createFactory(factoryModelId) {
+			const res = await createOneFactory(factoryModelId);
+			if(res?.response !== undefined) return;
+
+			const factory = res.data;
+			// Todo
 		},
-		async getAllFactories() {
-			// TODO
-			await getAllFactories();
+		async getAllUserFactories() {
+			const res = await getAllFactories();
+			if(res?.response !== undefined) return;
+
+			const factories = res.data;
+			// Todo
 		},
-		async getSingleFactory() {
-			// TODO
-			await getOneFactory(null);
+		async getSingleFactory(factoryId) {
+			const res = await getOneFactory(factoryId);
+			if(res?.response !== undefined) return;
+
+			const factory = res.data;
+			// Todo
 		},
-		async deleteFactory() {
-			// TODO
-			await deleteOneFactory(null);
+		async deleteFactory(factoryId) {
+			const res = await deleteOneFactory(factoryId);
+			if(res?.response !== undefined) return;
+
+			let factoryIndex = -1;
+			for(let n = 0; n < 0 /* Factories Length */; n++) {
+				const factory = {} /* Factories index */;
+				if(factory.id === factoryId) {
+					factoryIndex = n;
+				}
+			}
+
+			// Todo
+			// this.factories.splice(factoryIndex, 1);
 		},
-		async factoryLevelUp() {
-			// TODO
-			await levelUpOneFactory(null);
+		async factoryLevelUp(factoryId) {
+			const res = await levelUpOneFactory(factoryId);
+			if(res?.response !== undefined) return;
+
+			const factory = res.data;
+			// Todo
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
