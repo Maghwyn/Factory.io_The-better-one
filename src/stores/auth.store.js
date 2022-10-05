@@ -13,6 +13,7 @@ const authStoreDefaultState = () => {
 	return {
 		username: "",
 		isAuth: false,
+		isAdmin: false,
 	}
 }
 
@@ -21,12 +22,13 @@ export const useAuthStore = defineStore('auth', {
 	actions: {
 		async login(username, password) {
 			const res = await tryLogin(username, password).catch(err => err);
-			if(res?.response !== undefined) return;
+			if(res?.response !== undefined) return false;
 
 			const token = res?.data?.access_token;
-			if(!token) return;
+			if(!token) return false;
 
 			localStorage.token = token;
+			return true;
 		},
 		async signup(username, password) {
 			const res = await trySignUp(username, password).catch(err => err);
@@ -42,6 +44,12 @@ export const useAuthStore = defineStore('auth', {
 			const userStore = useUserStore();
 			userStore.setUser(res.data);
 			this.isAuth = true;
+			this.isAdmin = res.data.role === 1 ? true : false;
+		},
+		async tryAutoLogin() {
+			if(localStorage.token !== undefined) {
+				await this.fetchUserInfo();
+			}
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
