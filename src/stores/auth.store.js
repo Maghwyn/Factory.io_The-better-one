@@ -19,9 +19,6 @@ const authStoreDefaultState = () => {
 export const useAuthStore = defineStore('auth', {
 	state: () => authStoreDefaultState(),
 	actions: {
-		setAuth(status) {
-			this.isAuth = status;
-		},
 		async login(username, password) {
 			await tryLogin(username, password).then((res) => {
 				if(res?.data) {

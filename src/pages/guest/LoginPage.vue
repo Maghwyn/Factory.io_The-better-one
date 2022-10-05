@@ -57,17 +57,19 @@
 <script>
 import { useAuthStore } from '@/stores/auth.store'
 import { ref, defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     setup() {
         const authStore = useAuthStore();
-
+        const router = useRouter();
         const username = ref("");
         const password = ref("");
 
         const signIn = () => {
             authStore.login(username.value, password.value);
             console.log("signed");
+            router.push('/login');
         }
 
         return {
