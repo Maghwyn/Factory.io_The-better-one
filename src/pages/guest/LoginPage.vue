@@ -57,28 +57,26 @@
 <script>
 import { useAuthStore } from '@/stores/auth.store'
 import { ref, defineComponent } from 'vue';
-import { useRouter } from 'vue-router';
 
 export default defineComponent({
-    setup() {
-        const authStore = useAuthStore();
-        const router = useRouter();
-        const username = ref("");
-        const password = ref("");
+	setup() {
+		const authStore = useAuthStore();
+		const username = ref("");
+		const password = ref("");
 
-        const signIn = () => {
-            authStore.login(username.value, password.value);
-            console.log("signed");
-            router.push('/login');
-        }
+		const signIn = async () => {
+			const canLogin = await authStore.login(username.value, password.value);
+			if(!canLogin) return;
 
-        return {
-            signIn,
-            username,
-            password,
-        }
-    }
+			await authStore.fetchUserInfo();
+		}
 
+		return {
+			signIn,
+			username,
+			password,
+		}
+	}
 })
 </script>
 
