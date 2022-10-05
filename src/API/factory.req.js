@@ -10,17 +10,14 @@ export const getAllFactories = async () => {
 	return await http.get('/factories');
 };
 
-export const getOneFactory = async (id) => {
-	console.log(id);
-	return await http.get(`/factories/${id}`);
+export const getOneFactory = async (factoryId) => {
+	return await http.get(`/factories/${factoryId}`);
 };
 
-export const deleteOneFactory = async (id) => {
-	console.log(id);
-	return await http.delete(`/factories/${id}`);
+export const deleteOneFactory = async (factoryId) => {
+	return await http.delete(`/factories/${factoryId}`);
 };
 
-export const levelUpOneFactory = async (id) => {
-	console.log(id);
-	return await http.post(`/factories/${id}/levelup`);
+export const levelUpOneFactory = async (factoryId) => {
+	return await http.post(`/factories/${factoryId}/levelup`);
 };

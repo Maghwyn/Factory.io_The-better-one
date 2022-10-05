@@ -1,9 +1,11 @@
 import { http } from "./axios.config";
 
-export const createOneResource = async (resourceData) => {
+export const createOneResource = async (resourceName, imageUrl, baseValue) => {
 	console.log(resourceData);
 	return await http.post('/resources', {
-
+		name: resourceName,
+		image_url: imageUrl,
+		base_value: baseValue,
 	});
 };
 
@@ -11,9 +13,8 @@ export const getAllResources = async () => {
 	return await http.get('/resources');
 };
 
-export const getOneResource = async (id) => {
-	console.log(id);
-	return await http.get(`/resources/${id}`);
+export const getOneResource = async (resourceId) => {
+	return await http.get(`/resources/${resourceId}`);
 };
 
 export const getOneInventory = async () => {

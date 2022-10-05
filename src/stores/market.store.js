@@ -4,36 +4,72 @@ import { createOneTrade, getMyTrade, getOneTrade, getAllTrades, buyFactoryLimit,
 
 const marketStoreDefaultState = () => {
 	return {
-		
+		marketTrades: [],
+		userTrades: [],
 	}
 }
 
 export const useMarketStore = defineStore('market', {
 	state: () => marketStoreDefaultState(),
 	actions: {
-		async createTrade() {
-			// TODO
-			await createOneTrade(null);
+		async createTrade(resourceId, quantity, unitPrice) {
+			const res = await createOneTrade(resourceId, quantity, unitPrice);
+			if(res?.response !== undefined) return;
+
+			const trade = res.data;
+			if(!trade) return;
+
+			this.marketTrades.push(trade);
 		},
 		async getUserTrades() {
-			// TODO
-			await getMyTrade();
+			const res = await getMyTrade();
+			if(res?.response !== undefined) return;
+
+			const userTrades = res.data || [];
+			if(userTrades.length < 1) return;
+			
+			this.userTrades = userTrades;
 		},
-		async getSingleTrade() {
-			// TODO
-			await getOneTrade(null);
+		async getSingleTrade(tradeId) {
+			const res = await getOneTrade(tradeId);
+			if(res?.response !== undefined) return {};
+
+			const trade = res.data;
+			if(!trade) return {};
+			
+			return trade;
 		},
 		async getAllTrades() {
-			// TODO
-			await getAllTrades();
+			const res = await getAllTrades();
+			if(res?.response !== undefined) return;
+
+			const trades = res.data || [];
+			if(trades.length < 1) return;
+
+			this.marketTrades = trades;
 		},
-		async deleteTrade() {
-			// TODO
-			await deleteOneTrade(null);
+		async deleteUserTrade(tradeId) {
+			const res = await deleteOneTrade(tradeId);
+			if(res?.response !== undefined) return;
+
+			let tradeIndex = -1;
+			for(let n = 0; n < this.userTrades.length ; n++) {
+				const trade = this.userTrades[n];
+				if(trade.id === factoryId) {
+					tradeIndex = n;
+				}
+			}
+
+			if(tradeIndex === - 1) return;
+			this.userTrades.splice(factoryIndex, 1);
 		},
-		async buyFactoryLimit() {
-			// TODO
-			await buyFactoryLimit();
+		async buyFactoryLimit(tradeId, quantity) {
+			const res = await buyFactoryLimit(tradeId, quantity);
+			if(res?.response !== undefined) return;
+
+			const unsure = res.data;
+			// This will probably be added to user.
+			// Todo
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length

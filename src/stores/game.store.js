@@ -4,7 +4,7 @@ import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, lev
 
 const gameStoreDefaultState = () => {
 	return {
-		
+		factories: [],
 	}
 }
 
@@ -16,43 +16,62 @@ export const useGameStore = defineStore('game', {
 			if(res?.response !== undefined) return;
 
 			const factory = res.data;
-			// Todo
+			if(!factory) return;
+
+			this.factories.push(factory);
+			// Perhaps update the user factory at the same time, or dynamically.
 		},
 		async getAllUserFactories() {
 			const res = await getAllFactories();
 			if(res?.response !== undefined) return;
 
-			const factories = res.data;
-			// Todo
+			const factories = res.data || [];
+			if(factories.length > 1) return;
+
+			this.factories = factories;
 		},
 		async getSingleFactory(factoryId) {
 			const res = await getOneFactory(factoryId);
-			if(res?.response !== undefined) return;
+			if(res?.response !== undefined) return {};
 
 			const factory = res.data;
-			// Todo
+			if(!factory) return {};
+
+			return factory;
 		},
 		async deleteFactory(factoryId) {
 			const res = await deleteOneFactory(factoryId);
 			if(res?.response !== undefined) return;
 
 			let factoryIndex = -1;
-			for(let n = 0; n < 0 /* Factories Length */; n++) {
-				const factory = {} /* Factories index */;
+			for(let n = 0; n < this.factories.length ; n++) {
+				const factory = this.factories[n];
 				if(factory.id === factoryId) {
 					factoryIndex = n;
 				}
 			}
 
-			// Todo
-			// this.factories.splice(factoryIndex, 1);
+			if(factoryIndex === - 1) return;
+			this.factories.splice(factoryIndex, 1);
 		},
 		async factoryLevelUp(factoryId) {
 			const res = await levelUpOneFactory(factoryId);
 			if(res?.response !== undefined) return;
 
 			const factory = res.data;
-			// Todo
+			if(!factory) return;
+
+			let factoryIndex = -1;
+			for(let n = 0; n < this.factories.length ; n++) {
+				const factory = this.factories[n];
+				if(factory.id === factoryId) {
+					factoryIndex = n;
+				}
+			}
+
+			if(factoryIndex === - 1) return;
+			this.factories[n] = factory;
+			// Perhaps update the user factory at the same time, or dynamically.
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
