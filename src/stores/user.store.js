@@ -13,7 +13,7 @@ const userStoreDefaultState = () => {
 	}
 }
 
-export const authStore = defineStore('auth', {
+export const useUserStore = defineStore('auth', {
 	state: () => userStoreDefaultState(),
 	actions: {
 		setUser(user) {

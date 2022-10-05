@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
+import { useUserStore } from '@/stores/user.store';
 
 import {
 	tryLogin,
@@ -15,15 +16,13 @@ const authStoreDefaultState = () => {
 	}
 }
 
-export const authStore = defineStore('auth', {
+export const useAuthStore = defineStore('auth', {
 	state: () => authStoreDefaultState(),
 	actions: {
 		async login(username, password) {
 			await tryLogin(username, password).then((res) => {
-				const data = res?.data;
-
-				if(data) {
-          localStorage.token = data?.access_token;
+				if(res?.data) {
+					localStorage.token = res.data?.access_token;
 				}
 			})
 		},
@@ -37,10 +36,8 @@ export const authStore = defineStore('auth', {
 
 			const userStore = useUserStore();
 			userStore.setUser(res.data);
-      setAuthorizationBearer(localStorage.token);
-      this.isAuth = true;
-
-			const user = res.data;
+			setAuthorizationBearer(localStorage.token);
+			this.isAuth = true;
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
