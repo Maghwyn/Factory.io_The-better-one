@@ -1,10 +1,4 @@
-import axios from 'axios';
-
-
-const http = axios.create({
-	baseURL: "https://apigame.co",
-})
-
+import { http } from "./axios.config";
 
 export function tryGetAllFactories() {
 	return http.get('/factories')
@@ -19,7 +13,11 @@ export function tryCreateFactoryModel() {
 }
 
 export function tryCreateRessource(ressource) {
-	return http.post("/resources", {name: ressource.name, image_url: ressource.image_url, base_value: ressource.base_value})
+	return http.post("/resources", {
+		name: ressource.name,
+		image_url: ressource.image_url,
+		base_value: ressource.base_value
+	})
 }
 
 export function tryGetAllRessources() {
