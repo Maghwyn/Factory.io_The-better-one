@@ -32,10 +32,10 @@
 				</div>
 			</div>
 		</td>
+		<OverlayComp v-model:active="active" :fullSize="false">
+			<RessourcesEditForm v-model:active="active"/>
+		</OverlayComp>
 	</tr>
-	<OverlayComp v-model:active="active" :fullSize="false">
-		<RessourcesEditForm v-model:active="active"/>
-	</OverlayComp>
 </template>
 
 <script>
@@ -48,14 +48,14 @@ export default {
 		ressources: { type: Object, required: true }
 	},
 	components: {
-    OverlayComp,
-    RessourcesEditForm
-},
+		OverlayComp,
+		RessourcesEditForm
+	},
 	setup() {
-		const active = ref(false)
+		const active = ref(false);
 
 		const openForm = () => {
-			active.value = true
+			active.value = true;
 		}
 
 		const deleteRessource = () => {

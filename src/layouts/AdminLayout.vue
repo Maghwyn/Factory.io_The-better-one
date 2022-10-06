@@ -1,9 +1,22 @@
 <template>
-    <div class="view">
-        <header>HEADER</header>
+	<div class="view">
+		<AdminHeader></AdminHeader>
 
-        <router-view></router-view>
+		<router-view></router-view>
 
-        <footer>FOOTER</footer>
-    </div>
+		<AdminFooter></AdminFooter>
+	</div>
 </template>
+
+<script>
+import { defineComponent } from "vue";
+import AdminHeader from "@/components/layouts/AdminHeader.vue";
+import AdminFooter from "@/components/layouts/AdminFooter.vue";
+
+export default defineComponent({
+	components: {
+		AdminHeader,
+		AdminFooter,
+	}
+})
+</script>

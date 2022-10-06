@@ -11,7 +11,6 @@ import {
 
 const authStoreDefaultState = () => {
 	return {
-		username: "",
 		isAuth: false,
 		isAdmin: false,
 	}
