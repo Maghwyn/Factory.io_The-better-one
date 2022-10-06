@@ -3,6 +3,10 @@
         <CardProfile :user="userData"></CardProfile>
         <div class="user-card-separator"></div>
         <CardResource :rss="rss"></CardResource>
+        <!-- <div class="user-resource-cell" v-for="(resources, key) in rss" :key="key">
+			<span>{{ resources.id }}</span>
+			<span>{{ resources.money }}</span>
+		</div> -->
     </div>
 
 </template>
@@ -26,7 +30,7 @@ export default defineComponent({
         rss: {
             type: Array,
             required: false,
-            default: () => { },
+            default: () => [],
         }
     },
     setup(props) {
@@ -39,6 +43,32 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="scss">
+.user-card {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px black;
+    padding: 15px 40px;
+    overflow: hidden;
+    gap: 2rem;
 
+    &-separator {
+        height: 1px;
+        width: 100%;
+        border: .5px solid black;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            position: absolute;
+            background-color: white;
+            padding: 10px;
+        }
+    }
+}
 </style>

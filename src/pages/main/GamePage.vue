@@ -14,8 +14,7 @@ export default defineComponent({
 		const userStore = useUserStore();
 		userStore.getMyInventory()
 		const user = computed(() => userStore.user);
-		const rss = computed(() => userStore.inventory);
-		console.log(rss)
+		const rss = computed(() => userStore.inventory.resources).value;
 		return {
 			user,
 			rss
