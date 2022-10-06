@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
-import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, levelUpOneFactory } from '@/API/factory.req';
+import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, levelUpOneFactory, getAllModels } from '@/API/factory.req';
 
 const gameStoreDefaultState = () => {
 	return {
 		factories: [],
+		models: [],
+		actualFactory:[]
 	}
 }
 
@@ -21,10 +23,20 @@ export const useGameStore = defineStore('game', {
 			this.factories.push(factory);
 			// Perhaps update the user factory at the same time, or dynamically.
 		},
+		async getFactoriesModels() {
+			const res = await getAllModels();
+			if(res?.response !== undefined) return;
+
+			const modelList = res.data;
+			if (!modelList) return;
+			this.models.push(modelList);
+			// Perhaps update the user factory at the same time, or dynamically.
+		},
+
+
 		async getAllUserFactories() {
 			const res = await getAllFactories();
 			if(res?.response !== undefined) return;
-
 			const factories = res.data || [];
 			if(factories.length > 1) return;
 
@@ -72,6 +84,9 @@ export const useGameStore = defineStore('game', {
 			if(factoryIndex === - 1) return;
 			this.factories[factoryIndex] = factory;
 			// Perhaps update the user factory at the same time, or dynamically.
+		},
+		async getFactoryModal(factoryId){
+			this.actualFactory = await this.getSingleFactory(factoryId)
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length

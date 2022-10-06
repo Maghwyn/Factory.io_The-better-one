@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
 import { getOneInventory } from '@/API/resource.req';
+import { buyFactoryLimit, checkPriceFactoryLimit } from '@/API/user.req';
 
 const userStoreDefaultState = () => {
 	return {
@@ -12,6 +13,7 @@ const userStoreDefaultState = () => {
 			factories: null,
 		},
 		inventory: {},
+		nextFactoryPrice : "",
 	}
 }
 
@@ -29,6 +31,19 @@ export const useUserStore = defineStore('user', {
 			if(!userInventory) return;
 
 			this.inventory = userInventory;
+		},
+		async buyFactoryLimit(tradeId, quantity) {
+			const res = await buyFactoryLimit(tradeId, quantity);
+			if (res?.response !== undefined) return;
+			this.inventory = res.data;
+			
+			// This will probably be added to user.
+			// Todo
+		},
+		async checkPriceFactoryLimit() {
+			const res = await checkPriceFactoryLimit();
+			if(res?.response !== undefined) return;
+			this.nextFactoryPrice = res.data
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length

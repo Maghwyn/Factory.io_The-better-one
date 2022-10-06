@@ -63,14 +63,6 @@ export const useMarketStore = defineStore('market', {
 			if(tradeIndex === - 1) return;
 			this.userTrades.splice(factoryIndex, 1);
 		},
-		async buyFactoryLimit(tradeId, quantity) {
-			const res = await buyFactoryLimit(tradeId, quantity);
-			if(res?.response !== undefined) return;
-
-			const unsure = res.data;
-			// This will probably be added to user.
-			// Todo
-		},
 		reset(keys) {
 			Object.assign(this, keys?.length
 				? pick(marketStoreDefaultState(), keys)

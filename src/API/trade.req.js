@@ -23,10 +23,3 @@ export const getAllTrades = async () => {
 export const deleteOneTrade = async (tradeId) => {
 	return await http.delete(`/trades/${tradeId}`);
 };
-
-export const buyFactoryLimit = async (tradeId, quantity) => {
-	return await http.post('/users/buy-factory-limit', {
-		id: tradeId,
-		quantity,
-	});
-};
