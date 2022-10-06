@@ -3,7 +3,7 @@
 		<FactoryList></FactoryList>
 		<div class="user_card">
 			<UserCard class="user_card_width" :user="user" :rss="rss" />
-			<LevelUpCard :v-if="isLvlUp" />
+			<LevelUpCard v-if="isLvlUp" />
 		</div>
 
 	</div>
@@ -22,6 +22,7 @@
 
 .user_card_width {
 	width: 100%;
+
 }
 </style>
 

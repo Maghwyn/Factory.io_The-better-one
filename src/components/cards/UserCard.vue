@@ -51,6 +51,7 @@ export default defineComponent({
     overflow: hidden;
     gap: 2rem;
     height: 40vh;
+    flex: 1;
 
     &-separator {
         height: 1px;
