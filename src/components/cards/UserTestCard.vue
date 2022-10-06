@@ -31,7 +31,7 @@ export default defineComponent({
 	box-shadow: 0px 0px 5px black;
 	padding: 15px 40px;
 	overflow: hidden;
-	gap: 2rem;
+	gap: 1.5rem;
 
 	&-separator {
 		height: 1px;
