@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button @click="$emit('changePage', page)">{{ page }}</button>
+		<button class="number" @click="$emit('changePage', page)">{{ page }}</button>
 	</div>
 </template>
 
@@ -13,3 +13,9 @@
 		emit: ["changePage"],
 	}
 </script>
+
+<style lang="scss" scoped>
+	.number {
+		font-weight: bold;
+	}
+</style>
