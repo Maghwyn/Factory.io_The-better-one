@@ -33,10 +33,10 @@
 				</div>
 			</div>
 		</div>
+		<OverlayComp v-model:active="active" :fullSize="false">
+			<RessourcesForm v-model:active="active"/>
+		</OverlayComp>
 	</div>
-	<OverlayComp v-model:active="active" :fullSize="false">
-		<RessourcesForm v-model:active="active"/>
-	</OverlayComp>
 </template>
 
 <script>
