@@ -70,7 +70,7 @@ export const useGameStore = defineStore('game', {
 			}
 
 			if(factoryIndex === - 1) return;
-			this.factories[n] = factory;
+			this.factories[factoryIndex] = factory;
 			// Perhaps update the user factory at the same time, or dynamically.
 		},
 		reset(keys) {
