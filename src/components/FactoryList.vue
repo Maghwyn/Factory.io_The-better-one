@@ -17,6 +17,8 @@
         <div v-if="factories.length > 0" class="flex w-full flex-wrap justify-around">
             <FactoryCard v-for="(item, index) in factories" :key="index" :level="item.level" @click="getModal($event)"
                 :resource_type="item.model.resource.name" :resource_prod="item.generate_per_minute"></FactoryCard>
+            <!-- This is an example component -->
+
         </div>
 
         <div v-if="visible"
@@ -32,21 +34,26 @@
             <div class="bg-slate-800 bg-opacity-50 flex justify-center items-center">
                 <div class="bg-white px-16 py-14 rounded-md text-center">
                     <h3 class="text-xl mb-4 font-bold text-slate-500">Do you want to buy a factory ? ({{
-                    userStore.nextFactoryPrice.cost }})</h3>
-                    <p> Current money : {{ userStore.inventory.money }}</p>
+                    priceOfFactory }})</h3>
+                    <p> Current money : {{ money }}</p>
                     <div class="btn_div">
                         <div class="btn_parent">
                             <button @click="cancel()" class="btn_child_cancel">Cancel</button>
                         </div>
-                        <div class="btn_parent">
-                            <button v-if="userStore.nextFactoryPrice.cost > userStore.inventory.money" disabled
-                                class="btn_child_disabled">Pay
-                                {{userStore.nextFactoryPrice.cost}}</button>
+                        <div class="btn_parent" v-if="charged">
+                            <button v-if="factoryLimit <= factories.length" disabled class="btn_child_disabled">
+                                Pay {{priceOfFactory}}
+                            </button>
+                            <button v-else-if="money < priceOfFactory" disabled class="btn_child_disabled">Pay
+                                {{priceOfFactory}}</button>
                             <button v-else @click="gacha()" class="btn_child">
-                                Pay {{userStore.nextFactoryPrice.cost}}
+                                Pay {{priceOfFactory}}
                             </button>
                         </div>
                     </div>
+                    <p v-if="factoryLimit <= factories.length">You need to
+                        upgrade your factory limit in the market</p>
+                    <p v-if="money < priceOfFactory">You don't have enought money</p>
                 </div>
             </div>
         </OverlayComp>
@@ -54,15 +61,13 @@
     </div>
 </template>
 
-
-
 <script>
 import OverlayComp from '@/components/utils/OverlayComp.vue'
 import FactoryCard from "./cards/FactoryCard.vue";
 import DropdownFilter from "./filter/DropdownFilter.vue";
 import { useGameStore } from "@/stores/game.store";
 import { defineComponent, computed, ref, watch } from "vue";
-import { createFactoriesSelector } from "@/scripts/helpers/ValidateOffer";
+//import { createFactoriesSelector } from "@/scripts/helpers/ValidateOffer";
 import { useUserStore } from '@/stores/user.store'
 
 export default defineComponent({
@@ -74,7 +79,12 @@ export default defineComponent({
         const models = computed(() => gameStore.models);
         const visible = ref(false)
         const factories = computed(() => gameStore.factories);
-        const form = createFactoriesSelector();
+        //const form = createFactoriesSelector();
+        const inventory = computed(() => userStore.inventory)
+        const money = computed(() => inventory.value.money)
+        const priceOfFactory = 40
+        const charged = ref(false)
+        const factoryLimit = computed(() => inventory.value.factory_limit)
         const test = [
             "Hello", "Welcome", "Whatever"
         ]
@@ -87,13 +97,21 @@ export default defineComponent({
         gameStore.getFactoriesModels();
         gameStore.getAllUserFactories();
 
-        watch(form.values, val => {
+        // watch(form.values, val => {
+        //     console.log(val);
+        // }, { deep: true })
+
+        watch(inventory, val => {
             console.log(val);
+            charged.value = true
         }, { deep: true })
 
         const addFactory = () => {
             active.value = true
+        }
 
+        const market = () => {
+            this.$router.push("/market")
         }
 
         const cancel = () => {
@@ -122,22 +140,27 @@ export default defineComponent({
         const chooseFactory = (id_choosed) => {
             gameStore.createFactory(id_choosed)
             gameStore.getFactoriesModels();
+            userStore.getMyInventory();
+            resource_type = []
+            level = []
+            resource_prod = []
+            id = []
             visible.value = false
         }
-
 
         const getModal = (event) => {
             const factoryId = event.target.id
             gameStore.getFactoryModal(factoryId)
         }
 
-
         return {
+            market,
             cancel,
             gacha,
             addFactory,
             chooseFactory,
             getModal,
+            charged,
             visible,
             test,
             resource_type,
@@ -146,19 +169,20 @@ export default defineComponent({
             factories,
             userStore,
             active,
-            id
+            id,
+            priceOfFactory,
+            money,
+            factoryLimit
 
         }
     }
 })
-
 </script>
 
 <style lang="scss">
 .btn_div {
     display: flex;
 }
-
 
 .btn_parent {
     width: 100%;
@@ -204,7 +228,6 @@ export default defineComponent({
     }
 }
 
-
 .box_gacha {
     display: flex;
     justify-content: space-evenly;
@@ -228,7 +251,6 @@ export default defineComponent({
     }
 
 }
-
 
 .box-factory-card {
     width: 60%;

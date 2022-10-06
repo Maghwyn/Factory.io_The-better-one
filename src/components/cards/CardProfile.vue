@@ -12,6 +12,7 @@
 			</div>
 			<div>
 				<span class="coin">Income : {{ user.income }}</span>
+				<span class="coin">money : {{ inventory.money }}</span>
 				<span class="factory">Factories : {{ user.factories.length }}</span>
 			</div>
 		</div>
@@ -24,6 +25,11 @@ import { defineComponent } from "vue";
 export default defineComponent({
 	props: {
 		user: {
+			type: Object,
+			required: false,
+			default: () => { },
+		},
+		inventory: {
 			type: Object,
 			required: false,
 			default: () => { },

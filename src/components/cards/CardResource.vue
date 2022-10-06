@@ -1,9 +1,15 @@
 <template>
 	<div class="user-resource">
-		<div v-if="rss.value != null">
-			<div class="user-resource-cell" v-for="(resources, key) in rss" :key="key">
-				<span>{{ resources }}</span>
-				<span>{{ resources }}</span>
+		<div v-if="allResources[0] !== undefined">
+			<div class="user-resource-cell">
+				<div v-for="(resources, key) in rss" :key="key" class="box_rss">
+					<span>{{ key }}</span>
+					<span>{{ resources }}</span>
+				</div>
+				<div v-for="(resources, key) in rssShowed" :key="key" class="box_rss">
+					<span>{{ resources.name }}</span>
+					<span v-if="resources.name "> 0 </span>
+				</div>
 			</div>
 		</div>
 		<div v-else>
@@ -15,21 +21,56 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed, watch } from "vue";
+import { useUserStore } from '@/stores/user.store'
+import { useResourceStore } from '@/stores/resource.store'
 
 export default defineComponent({
-	props: {
-		rss: {
-			type: Array,
-			required: false,
-			default: () => [],
+	setup() {
+		const resourceStore = useResourceStore();
+		resourceStore.getAllResources()
+		const allResources = computed(() => resourceStore.resources)
+		var rssShowed = []
+		const userStore = useUserStore();
+		const inventory = computed(() => userStore.inventory);
+		const rss = {}
+
+		watch(allResources, val => {
+			console.log(val)
+			for (let i = 0; i < inventory.value.inventory_resources.length; i++) {
+				for (let y = 0; y < allResources.value.length; y++) {
+					if (allResources.value[y].id == inventory.value.inventory_resources[i].id) {
+						rss[allResources.value[y].name] = inventory.value.inventory_resources[i].quantity
+					}
+					else {
+						rssShowed.push(allResources.value[y])
+					}
+				}
+			}
+
+
+		}, { deep: true })
+
+
+
+
+		return {
+			inventory,
+			allResources,
+			rss,
+			rssShowed
 		}
-	},
+	}
 
 })
 </script>
 
 <style lang="scss">
+.box_rss {
+	display: flex;
+	justify-content: space-between;
+}
+
 .user-resource {
 	width: 100%;
 	display: flex;
@@ -40,7 +81,7 @@ export default defineComponent({
 	&-cell {
 		display: flex;
 		justify-content: space-between;
-		gap: 2rem;
+		flex-direction: column;
 
 		span {
 			font-size: 13px;

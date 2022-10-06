@@ -32,8 +32,6 @@ export const useGameStore = defineStore('game', {
 			this.models.push(modelList);
 			// Perhaps update the user factory at the same time, or dynamically.
 		},
-
-
 		async getAllUserFactories() {
 			const res = await getAllFactories();
 			if(res?.response !== undefined) return;

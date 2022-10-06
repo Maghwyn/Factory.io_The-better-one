@@ -32,8 +32,8 @@ export const useUserStore = defineStore('user', {
 
 			this.inventory = userInventory;
 		},
-		async buyFactoryLimit(tradeId, quantity) {
-			const res = await buyFactoryLimit(tradeId, quantity);
+		async buyFactoryLimit() {
+			const res = await buyFactoryLimit();
 			if (res?.response !== undefined) return;
 			this.inventory = res.data;
 			

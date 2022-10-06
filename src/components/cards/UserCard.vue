@@ -1,10 +1,10 @@
 <template>
     <div class="user-card">
-        <CardProfile :user="userData"></CardProfile>
+        <CardProfile :inventory="inventory" :user="userData"></CardProfile>
         <div class="user-card-separator">
             <span>Resources</span>
         </div>
-        <CardResource :rss="rss"></CardResource>
+        <CardResource></CardResource>
     </div>
 </template>
 
@@ -24,10 +24,10 @@ export default defineComponent({
             required: false,
             default: () => { },
         },
-        rss: {
-            type: Array,
+        inventory: {
+            type: Object,
             required: false,
-            default: () => [],
+            default: () => { },
         }
     },
     setup(props) {
