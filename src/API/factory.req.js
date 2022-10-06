@@ -21,3 +21,7 @@ export const deleteOneFactory = async (factoryId) => {
 export const levelUpOneFactory = async (factoryId) => {
 	return await http.post(`/factories/${factoryId}/levelup`);
 };
+
+export const getAllModels = async () => {
+	return await http.get('/factories/models');
+};

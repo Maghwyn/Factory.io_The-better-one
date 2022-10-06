@@ -1,17 +1,18 @@
 <template>
 	<div class="user-profile">
 		<div class="user-profile-img">
-			<img src="https://d.wattpad.com/story_parts/737845095/images/15a2c96351dcd0a5170250432904.jpg" alt="user_img"/>
+			<img src="https://d.wattpad.com/story_parts/737845095/images/15a2c96351dcd0a5170250432904.jpg"
+				alt="user_img" />
 		</div>
 		<div class="user-profile-info">
 			<div>
 				<span class="username">
-					{{ user || `USERNAME`}}
+					{{ user.username }}
 				</span>
 			</div>
 			<div>
-				<span class="coin">COINS LOGO</span>
-				<span class="factory">Factory possessed</span>
+				<span class="coin">Income : {{ user.income }}</span>
+				<span class="factory">Factories : {{ user.factories.length }}</span>
 			</div>
 		</div>
 	</div>
@@ -22,10 +23,10 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
 	props: {
-		user: { 
-			type: Object, 
+		user: {
+			type: Object,
 			required: false,
-			default: () => {},
+			default: () => { },
 		}
 	}
 })
@@ -80,7 +81,7 @@ export default defineComponent({
 					font-weight: 400;
 					margin-left: 20px;
 				}
-				
+
 				&.factory {
 					font-size: 14px;
 					font-weight: 400;

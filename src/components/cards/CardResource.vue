@@ -1,12 +1,15 @@
 <template>
 	<div class="user-resource">
-		<div 
-			class="user-resource-cell"
-			v-for="(data, key) in fakeData"
-			:key="key"
-		>
-			<span>{{ data.name }}</span>
-			<span>{{ data.amount }}</span>
+		<div v-if="rss.value != null">
+			<div class="user-resource-cell" v-for="(resources, key) in rss" :key="key">
+				<span>{{ resources }}</span>
+				<span>{{ resources }}</span>
+			</div>
+		</div>
+		<div v-else>
+			<div class="user-resource-cell">
+				<p>No resources yet</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -16,32 +19,13 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
 	props: {
-		rss: { 
-			type: Array, 
+		rss: {
+			type: Array,
 			required: false,
-			default: () => [], 
+			default: () => [],
 		}
 	},
-	setup() {
-		const fakeData = [
-			{
-				name: "Bois",
-				amount: "90",
-			},
-			{
-				name: "Fer",
-				amount: "20",
-			},
-			{
-				name: "Plastic",
-				amount: "40",
-			},
-		]
 
-		return {
-			fakeData,
-		}
-	},
 })
 </script>
 
