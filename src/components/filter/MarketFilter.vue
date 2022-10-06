@@ -1,30 +1,34 @@
 <template>
 	<div class="market-filter">
 		<div 
-			v-for="(ressource, key) in fakeData"
+			v-for="(ressource, key) in resources"
 			:key="key"
 		>
-			<button @click="filterByResource(ressource, key)">{{ ressource }}</button>
+			<button @click="filterByResource(ressource)">{{ ressource.name }}</button>
 		</div>
 	</div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { useResourceStore } from "@/stores/resource.store";
+import { useMarketStore } from '@/stores/market.store';
+import { defineComponent, computed } from "vue";
 
 export default defineComponent({
 	setup() {
-		const fakeData = [
-			"Bois", "Fer", "Plastic"
-		]
+		const resourceStore = useResourceStore();
+		const marketStore = useMarketStore();
+		resourceStore.getAllResources();
 
-		const filterByResource = (resource, key) => {
-			console.log(key, resource)
+		const resources = computed(() => resourceStore.resources);
+
+		const filterByResource = (resource) => {
+			marketStore.setTradeFilter(resource);
 		}
 
 		return {
 			filterByResource,
-			fakeData,
+			resources,
 		}
 	}
 })
