@@ -14,7 +14,7 @@
 				@beforeinput="$emit('beforeinput', $event, value)"
 				@input="(e) => {
 					if(mode === 'aggresive')
-						return onAggressiveMode(value as string)
+						return onAggressiveMode(value)
 					if(mode === 'none')
 						return $emit('input', e, value, id)
 					
@@ -28,8 +28,7 @@
 	</div>
 </template>
 
-<script lang="ts">
-// @ts-ignore // TODO
+<script>
 import { useField } from 'vee-validate';
 import { defineComponent, computed, ref } from 'vue';
 
@@ -45,7 +44,7 @@ export default defineComponent({
 		fill: {
 			type: String,
 			required: true,
-			validator(value: string) {
+			validator(value) {
 				return ['single','double','double-no-gap','grow','fit'].includes(value);
 			}
 		},
@@ -53,22 +52,24 @@ export default defineComponent({
 		toggleVisibility: { type: Function, required: false, default: () => {} },
 	},
 	setup(props) {
-		const { input, id } = props;
+		const propsRef = ref(props);
+		const input = propsRef.value.input;
+		const id = propsRef.value.id;
 		
 		const mode = computed(() => props.mode);
 		const fieldData = ref(input);
 
-		const { errorMessage, value, handleChange } = useField<string>(id, null, {
+		const { errorMessage, value, handleChange } = useField(id, null, {
 			validateOnValueUpdate: mode.value === "passive" ? false : true,
 		});
 
-		const onAggressiveMode = (value: string) => {
+		const onAggressiveMode = (value) => {
 			if(value === "") value = undefined;
 			handleChange(value, true);
 		}
 
 		if(fieldData.value !== undefined) {
-			handleChange(fieldData.value, false)
+			handleChange(fieldData.value, false);
 		}
 
 		return {
@@ -95,9 +96,14 @@ export default defineComponent({
 	&.grow { flex-grow: 1;}
 	&.fit { width: fit-content; }
 
-	&-label label {
-		font-size: 12px;
-		font-weight: 600;
+	&-label {
+		display: flex;
+		align-items: flex-start;
+		
+		label {
+			font-size: 12px;
+			font-weight: 600;
+		}
 	}
 
 	&-input {
@@ -117,11 +123,10 @@ export default defineComponent({
 			font-weight: 600;
 			font-size: 14px;
 			color: black;
+			padding: 0 .75rem 0 .75rem;
 
 			&::placeholder { color: rgb(167, 170, 176); }
 			&:focus { border: 1px solid #626262; }
-
-			&.pn { padding: 0 .75rem 0 .75rem; }
 		}
 	}
 

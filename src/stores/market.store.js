@@ -55,19 +55,19 @@ export const useMarketStore = defineStore('market', {
 			let tradeIndex = -1;
 			for(let n = 0; n < this.userTrades.length ; n++) {
 				const trade = this.userTrades[n];
-				if(trade.id === factoryId) {
+				if(trade.id === tradeId) {
 					tradeIndex = n;
 				}
 			}
 
 			if(tradeIndex === - 1) return;
-			this.userTrades.splice(factoryIndex, 1);
+			this.userTrades.splice(tradeIndex, 1);
 		},
 		async buyFactoryLimit(tradeId, quantity) {
 			const res = await buyFactoryLimit(tradeId, quantity);
 			if(res?.response !== undefined) return;
 
-			const unsure = res.data;
+			// const unsure = res.data;
 			// This will probably be added to user.
 			// Todo
 		},

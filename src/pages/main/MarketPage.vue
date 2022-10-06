@@ -15,12 +15,17 @@ import UserTestCard from "@/components/cards/UserTestCard.vue";
 import MarketFilter from "@/components/filter/MarketFilter.vue";
 import DashboardMarket from "@/components/dashboard/DashboardMarket.vue";
 import { defineComponent } from "vue";
+import { useMarketStore } from "@/stores/market.store";
 
 export default defineComponent({
 	components: {
 		UserTestCard,
 		MarketFilter,
 		DashboardMarket,
+	},
+	setup() {
+		const marketStore = useMarketStore();
+		marketStore.getAllTrades();
 	}
 })
 </script>
@@ -35,6 +40,7 @@ export default defineComponent({
 	justify-content: flex-start;
 	flex-flow: row-reverse;
 	gap: 1rem;
+	background-color: #353941;
 
 	&-settings {
 		max-width: 330px;
