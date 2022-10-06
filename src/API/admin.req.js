@@ -1,11 +1,5 @@
 import { http } from "./axios.config";
 
-export function tryGetAllFactories() {
-	return http.get('/factories')
-}
-
-
-
 export function tryCreateRessource(ressource) {
 	return http.post("/resources", {
 		name: ressource.name,
@@ -50,3 +44,6 @@ export function tryUpdateModel(model) {
 	return http.put("/factories/models", {resource_id: model.resource_id, upgrade_base_value: model.upgrade_base_value, upgrade_coef: model.upgrade_coef, upgrade_resource_id: model.upgrade_resource_id, generate_per_minute: model.generate_per_minute })
 }
 
+export function tryGetAllFactories() {
+	return http.get('/factories/admin/all')
+}
