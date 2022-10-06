@@ -27,19 +27,19 @@
 </style>
 
 <script>
-import { useUserStore } from "@/stores/user.store";
 import { defineComponent, computed, watch, ref } from "vue";
 import UserCard from "@/components/cards/UserCard.vue";
 import FactoryList from '../../components/FactoryList.vue'
 import { useGameStore } from "@/stores/game.store";
+import { useUserStore } from "@/stores/user.store";
 import LevelUpCard from "@/components/cards/LevelUpCard.vue";
 
 export default defineComponent({
 	setup() {
 
-		const userStore = useUserStore();
 		const gameStore = useGameStore();
 		const factory = computed(() => gameStore.actualFactory);
+		const userStore = useUserStore();
 		userStore.getMyInventory();
 		const user = computed(() => userStore.user);
 		const rss = computed(() => userStore.inventory.resources);

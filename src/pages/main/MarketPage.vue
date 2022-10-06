@@ -1,7 +1,7 @@
 <template>
 	<div class="market">
 		<div class="market-settings">
-			<UserTestCard></UserTestCard>
+			<UserCard :user="user" :rss="rss" />
 			<MarketFilter></MarketFilter>
 		</div>
 		<div class="market-dashboard">
@@ -11,21 +11,33 @@
 </template>
 
 <script>
-import UserTestCard from "@/components/cards/UserTestCard.vue";
+import UserCard from "@/components/cards/UserCard.vue";
 import MarketFilter from "@/components/filter/MarketFilter.vue";
 import DashboardMarket from "@/components/dashboard/DashboardMarket.vue";
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import { useMarketStore } from "@/stores/market.store";
+import { useUserStore } from "@/stores/user.store";
 
 export default defineComponent({
+
 	components: {
-		UserTestCard,
+		UserCard,
 		MarketFilter,
 		DashboardMarket,
 	},
 	setup() {
+		const userStore = useUserStore();
+		userStore.getMyInventory();
+		const user = computed(() => userStore.user);
+		const rss = computed(() => userStore.inventory.resources);
+
 		const marketStore = useMarketStore();
 		marketStore.getAllTrades();
+
+		return {
+			user,
+			rss
+		}
 	}
 })
 </script>

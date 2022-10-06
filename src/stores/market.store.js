@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
-import { createOneTrade, getMyTrade, getOneTrade, getAllTrades, buyFactoryLimit, deleteOneTrade } from '@/API/trade.req';
+import { createOneTrade, getMyTrade, getOneTrade, getAllTrades, deleteOneTrade } from '@/API/trade.req';
 
 const marketStoreDefaultState = () => {
 	return {

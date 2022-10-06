@@ -1,10 +1,11 @@
 <template>
     <div class="user-card">
         <CardProfile :user="userData"></CardProfile>
-        <div class="user-card-separator"></div>
+        <div class="user-card-separator">
+            <span>Resources</span>
+        </div>
         <CardResource :rss="rss"></CardResource>
     </div>
-
 </template>
 
 <script>
@@ -41,7 +42,7 @@ export default defineComponent({
 
 <style lang="scss">
 .user-card {
-    width: fit-content;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,9 +50,8 @@ export default defineComponent({
     box-shadow: 0px 0px 5px black;
     padding: 15px 40px;
     overflow: hidden;
-    gap: 2rem;
-    height: 40vh;
-    flex: 1;
+    gap: 1.5rem;
+    background-color: white;
 
     &-separator {
         height: 1px;
