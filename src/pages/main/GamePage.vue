@@ -1,13 +1,12 @@
 <template>
-    <p>yo</p>
-    <FactoryCard></FactoryCard>
+    <FactoryList></FactoryList>
 </template>
 
 <script>
-    import FactoryCard from '@/components/cards/FactoryCard.vue'
+import FactoryList from '../../components/FactoryList.vue'
 export default {
     components:{
-    FactoryCard
+    FactoryList
 }
 }
 </script>
