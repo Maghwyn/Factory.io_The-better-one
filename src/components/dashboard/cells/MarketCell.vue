@@ -42,7 +42,9 @@
 			:fullSize="false"
 			crossColor="#165ed2"
 		>
-			THIS IS WHERE WE'LL BUY.
+			<OverlayConfirm
+				v-model:active="activeBuy"
+			></OverlayConfirm>
 		</OverlayComp>
 
 		<OverlayComp
@@ -50,7 +52,9 @@
 			:fullSize="false"
 			crossColor="#f03d3d"
 		>
-			ARE YOU SURE YOU WANT TO CANCEL
+			<OverlayCancel
+				v-model:active="activeCancel"
+			></OverlayCancel>
 		</OverlayComp>
 	</tr>
 </template>
@@ -58,6 +62,8 @@
 <script>
 import OverlayComp from '@/components/utils/OverlayComp.vue';
 import { ref, computed } from "vue";
+import OverlayCancel from '@/components/overlay/OverlayCancel.vue';
+import OverlayConfirm from '@/components/overlay/OverlayConfirm.vue';
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -69,6 +75,8 @@ export default {
 	},
 	components: {
 		OverlayComp,
+		OverlayCancel,
+		OverlayConfirm,
 	},
 	setup() {
 		const activeBuy = ref(false);

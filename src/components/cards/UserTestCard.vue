@@ -32,6 +32,7 @@ export default defineComponent({
 	padding: 15px 40px;
 	overflow: hidden;
 	gap: 1.5rem;
+	background-color: white;
 
 	&-separator {
 		height: 1px;

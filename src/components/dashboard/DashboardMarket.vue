@@ -46,7 +46,9 @@
 			:fullSize="false"
 			crossColor="#165ed2"
 		>
-			THIS IS WHERE THE OFFER FORM IS
+			<MarketNewTrade
+				v-model:active="active"
+			></MarketNewTrade>
 		</OverlayComp>
 	</div>
 </template>
@@ -54,12 +56,15 @@
 <script>
 import MarketCell from '@/components/dashboard/cells/MarketCell.vue';
 import OverlayComp from '@/components/utils/OverlayComp.vue';
-import { ref, computed } from 'vue';
+import MarketNewTrade from '../forms/MarketNewTrade.vue';
+import { ref, computed, watch } from 'vue';
+// import Swal from 'sweetalert2';
 
 export default {
 	components: {
 		MarketCell,
 		OverlayComp,
+		MarketNewTrade,
 	},
 	setup() {
 		const active = ref(false);
@@ -100,6 +105,16 @@ export default {
 			active.value = true;
 		}
 
+		watch(active, val => {
+			if(!val) {
+				// Swal.fire({
+				// 	icon: 'success',
+				// 	title: 'Success',
+				// 	text: 'Test efzfzefzef',
+				// })
+			}
+		})
+
 		return {
 			placeAnOffer,
 			offers,
@@ -113,6 +128,7 @@ export default {
 .market-dashboard {
 	box-shadow: 0px 0px 5px black;
 	flex: 1 0;
+	background-color: white;
 
 	&-addoffer {
 		width: 100%;

@@ -39,6 +39,7 @@ export default defineComponent({
 	align-content: baseline;
 	flex-flow: wrap row;
 	flex: 1 0;
+	background-color: white;
 
 	border-radius: 15px;
 	box-shadow: 0px 0px 5px black;
