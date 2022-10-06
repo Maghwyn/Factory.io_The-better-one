@@ -1,5 +1,5 @@
 <template>
-  <router-view></router-view>
+	<router-view></router-view>
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default defineComponent({
 		const isAuth = computed(() => authStore.isAuth);
 
 		watch(isAuth, auth => {
-			if(auth) router.push('/app/game');
+			if (auth) router.push('/app/game');
 			else router.push('/login');
 		})
 	}

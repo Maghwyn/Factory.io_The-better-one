@@ -6,6 +6,7 @@ import route from "./router/index";
 import i18nInstance from '@/i18n/i18n';
 import "@/scss/config.scss"
 import './assets/tailwind.css'
+import "@/scss/selectMultislider.scss"
 
 const pinia = createPinia();
 const store = useAuthStore(pinia);
