@@ -16,7 +16,6 @@ export default {
         const adminStore = useAdminStore();
 
             adminStore.getAllFactories();
-            adminStore.getAllUsers();
             adminStore.getAllRessources();
 
         return {
