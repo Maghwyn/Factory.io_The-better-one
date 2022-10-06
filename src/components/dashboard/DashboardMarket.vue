@@ -58,6 +58,7 @@ import MarketCell from '@/components/dashboard/cells/MarketCell.vue';
 import OverlayComp from '@/components/utils/OverlayComp.vue';
 import MarketNewTrade from '../forms/MarketNewTrade.vue';
 import { ref, computed, watch } from 'vue';
+// import { useMarketStore } from '@/stores/market.store';
 // import Swal from 'sweetalert2';
 
 export default {
@@ -67,7 +68,10 @@ export default {
 		MarketNewTrade,
 	},
 	setup() {
-		const active = ref(false);
+		//! Uncomment if trades available.
+		// const marketStore = useMarketStore();
+		// const offers = computed(() => marketStore.filteredTrades);
+
 		const offers = computed(() => [
 			{
 				quantity: 10,
@@ -100,6 +104,8 @@ export default {
 				}
 			}
 		])
+
+		const active = ref(false);
 
 		const placeAnOffer = () => {
 			active.value = true;

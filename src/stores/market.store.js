@@ -6,11 +6,29 @@ const marketStoreDefaultState = () => {
 	return {
 		marketTrades: [],
 		userTrades: [],
+		filterBy: {},
 	}
 }
 
 export const useMarketStore = defineStore('market', {
 	state: () => marketStoreDefaultState(),
+	getters: {
+		filteredTrades: state => {
+			const tradeFilter = state.filterBy;
+			const marketTrades = state.marketTrades;
+			const filteredTrades = [];
+
+			for(let n = 0; n < marketTrades.length; n++) {
+				const trade = marketTrades[n];
+
+				if(trade.resource.id === tradeFilter.id) {
+					filteredTrades.push(trade);
+				}
+			}
+			
+			return filteredTrades;
+		}
+	},
 	actions: {
 		async createTrade(resourceId, quantity, unitPrice) {
 			const res = await createOneTrade(resourceId, quantity, unitPrice);
@@ -70,6 +88,9 @@ export const useMarketStore = defineStore('market', {
 			// const unsure = res.data;
 			// This will probably be added to user.
 			// Todo
+		},
+		setTradeFilter(resource) {
+			this.filterBy = resource;
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
