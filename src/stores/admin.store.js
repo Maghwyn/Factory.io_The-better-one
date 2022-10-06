@@ -6,7 +6,7 @@ import {
 	tryGetAllModels,
 	tryCreateModel,
 	tryRemoveModel,
-	tryUpdateModel
+	tryUpdateModel,
 } from '@/API/admin.req'
 import { defineStore } from 'pinia'
 
@@ -24,12 +24,6 @@ export const useAdminStore = defineStore('admin', {
 	getters: {
 	},
 	actions: {
-		getAllFactories() {
-			tryGetAllFactories().then(res => {
-				console.log(res.data);
-				
-			})
-		},
 		getAllUsers() {
 			tryGetAllUsers().then(res => {
 				this.users = res.data
@@ -72,6 +66,11 @@ export const useAdminStore = defineStore('admin', {
 					console.log(res.data);
 				})
 			}
+		},
+		getAllFactories() {
+			tryGetAllFactories().then(res => {
+				this.factories = res.data
+			})
 		}
 	}
 });
