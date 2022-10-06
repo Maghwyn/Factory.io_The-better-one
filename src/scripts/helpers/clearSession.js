@@ -14,12 +14,12 @@ export const clearSession = () => {
 	const resourceStore = useResourceStore();
 	const userStore = useUserStore();
 
-	adminStore.reset(["users", "allRessources", "factories", "modelsFactories"]);
-	authStore.reset(["isAuth", "isAdmin"]);
-	gameStore.reset(["factories"]);
-	marketStore.reset(["marketTrades", "userTrades"]);
-	resourceStore.reset(["resources"]);
-	userStore.reset(["user", "inventory"]);
-	http.defaults.headers.common["Authorization"] = null
+	adminStore.reset();
+	authStore.reset();
+	gameStore.reset();
+	marketStore.reset();
+	resourceStore.reset();
+	http.defaults.headers.common["Authorization"] = null;
 	localStorage.clear();
+	userStore.reset();
 }

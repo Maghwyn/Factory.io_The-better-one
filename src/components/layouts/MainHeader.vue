@@ -38,8 +38,9 @@ export default defineComponent({
 		const authStore = useAuthStore();
 		const isAdmin = computed(() => authStore.isAdmin)
 		const logout = () => {
-			clearSession()
+			clearSession();
 		}
+
 		return {
 			isAdmin,
 			logout

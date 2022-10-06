@@ -14,6 +14,7 @@ export default defineComponent({
 		const isAuth = computed(() => authStore.isAuth);
 
 		watch(isAuth, auth => {
+			console.log("IS AUTH ::", auth);
 			if (auth) router.push('/app/game');
 			else router.push('/login');
 		})

@@ -11,8 +11,8 @@
 				</span>
 			</div>
 			<div>
-				<span class="coin">Income : {{ user.income }}</span>
-				<span class="factory">Factories : {{ user.factories.length }}</span>
+				<span class="coin">Income : {{ user?.income }}</span>
+				<span class="factory">Factories : {{ user?.factories?.length }}</span>
 			</div>
 		</div>
 	</div>
