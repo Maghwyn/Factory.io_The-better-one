@@ -8,19 +8,20 @@ import {
 	tryRemoveModel,
 	tryUpdateModel,
 } from '@/API/admin.req'
+import { pick } from '@/scripts/helpers/pick.js';
 import { defineStore } from 'pinia'
 
+const userStoreDefaultState = () => {
+	return {
+		users: [],
+		allRessources: [],
+		factories: [],
+		modelsFactories: []
+	}
+}
 
 export const useAdminStore = defineStore('admin', {
-	state() {
-		return {
-			isAuth: false,
-			users: [],
-			allRessources: [],
-			factories: [],
-			modelsFactories: []
-		}
-	},
+	state: () => userStoreDefaultState(),
 	getters: {
 	},
 	actions: {
@@ -71,6 +72,12 @@ export const useAdminStore = defineStore('admin', {
 			tryGetAllFactories().then(res => {
 				this.factories = res.data
 			})
+		},
+		reset(keys) {
+			Object.assign(this, keys?.length
+				? pick(userStoreDefaultState(), keys)
+				: userStoreDefaultState() // if no keys provided, reset all
+			);
 		}
 	}
 });

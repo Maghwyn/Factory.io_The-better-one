@@ -1,7 +1,7 @@
 import { http } from "./axios.config";
 
 export const setAuthorizationBearer = (jwt) => {
-	http.defaults.headers.common["Authorization"] = `Bearer ${process.env.VUE_APP_ADMIN_JWT || jwt}`;
+	http.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 }
 
 export const tryLogin = async (username, password) => {

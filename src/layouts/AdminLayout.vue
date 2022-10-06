@@ -1,6 +1,6 @@
 <template>
 	<div class="view">
-		<AdminHeader></AdminHeader>
+		<MainHeader></MainHeader>
 
 		<router-view></router-view>
 
@@ -10,13 +10,13 @@
 
 <script>
 import { defineComponent } from "vue";
-import AdminHeader from "@/components/layouts/AdminHeader.vue";
 import AdminFooter from "@/components/layouts/AdminFooter.vue";
+import MainHeader from '@/components/layouts/MainHeader.vue';
 
 export default defineComponent({
 	components: {
-		AdminHeader,
-		AdminFooter,
-	}
+    AdminFooter,
+    MainHeader
+}
 })
 </script>
