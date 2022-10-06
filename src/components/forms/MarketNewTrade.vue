@@ -40,6 +40,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { createOfferValidator } from "@/scripts/helpers/formValidator.js";
+import { useMarketStore } from "@/stores/market.store";
 import InputComp from "../utils/InputComp.vue";
 
 export default defineComponent({
@@ -48,13 +49,16 @@ export default defineComponent({
 		InputComp,
 	},
 	setup(_props, { emit }) {
+		const marketStore = useMarketStore()
 		const form = createOfferValidator();
 		const mode = ref('passive');
 
 		const createTrade = async () => {
 			const res = await form.validate();
 			if(!res.valid) return mode.value = 'aggresive';
+			const dto = form.values;
 
+			await marketStore.createTrade(dto.resourceId, dto.quantity, dto.unitPrice);
 			emit("update:active", false);
 		}
 

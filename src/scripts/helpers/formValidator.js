@@ -16,3 +16,15 @@ export const createOfferValidator = () => {
 		validationSchema: validations,
 	});
 }
+
+export const buyOfferValidator = () => {
+	const validations = object().shape({
+		quantity: number()
+			.required("You need to specify a quantity"),
+	}).required();
+
+
+	return useForm({
+		validationSchema: validations,
+	});
+}

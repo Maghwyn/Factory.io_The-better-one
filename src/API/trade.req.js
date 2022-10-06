@@ -2,7 +2,7 @@ import { http } from "./axios.config";
 
 export const createOneTrade = async (resourceId, quantity, unitPrice) => {
 	return await http.post('/trades', { 
-		resource_id: resourceId,
+		resourceId: resourceId,
 		quantity,
 		unitPrice,
 	});
@@ -30,3 +30,10 @@ export const buyFactoryLimit = async (tradeId, quantity) => {
 		quantity,
 	});
 };
+
+export const buyOneTrade = async (tradeId, quantity) => {
+	return await http.post('/trades/buy', {
+		id: tradeId,
+		quantity,
+	})
+}

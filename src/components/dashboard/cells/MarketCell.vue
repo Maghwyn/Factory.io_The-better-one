@@ -43,6 +43,7 @@
 			crossColor="#165ed2"
 		>
 			<OverlayConfirm
+				:tradeId="offer.id"
 				v-model:active="activeBuy"
 			></OverlayConfirm>
 		</OverlayComp>
@@ -53,6 +54,7 @@
 			crossColor="#f03d3d"
 		>
 			<OverlayCancel
+				:tradeId="offer.id"
 				v-model:active="activeCancel"
 			></OverlayCancel>
 		</OverlayComp>
@@ -61,9 +63,9 @@
 
 <script>
 import OverlayComp from '@/components/utils/OverlayComp.vue';
-import { ref, computed } from "vue";
 import OverlayCancel from '@/components/overlay/OverlayCancel.vue';
 import OverlayConfirm from '@/components/overlay/OverlayConfirm.vue';
+import { ref, computed } from "vue";
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
