@@ -1,6 +1,14 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
-import { createOneTrade, getMyTrade, getOneTrade, getAllTrades, deleteOneTrade } from '@/API/trade.req';
+
+import { 
+	createOneTrade,
+	getMyTrade,
+	getOneTrade,
+	getAllTrades,
+	deleteOneTrade,
+	buyOneTrade,
+} from '@/API/trade.req';
 
 const marketStoreDefaultState = () => {
 	return {
@@ -80,6 +88,15 @@ export const useMarketStore = defineStore('market', {
 
 			if(tradeIndex === - 1) return;
 			this.userTrades.splice(tradeIndex, 1);
+		},
+		async buyOfferTrade(tradeId, quantity) {
+			const res = await buyOneTrade(tradeId, quantity);
+			if(res?.response !== undefined) return;
+
+			console.log(res);
+		},
+		setTradeFilter(resource) {
+			this.filterBy = resource;
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length

@@ -3,6 +3,18 @@
 		<div class="confirm-card-title">
 			<h2>Do you wish to buy this product ?</h2>
 		</div>
+		<div class="confirm-card-qtt">
+			<InputComp
+				:mode="mode"
+				id="quantity"
+				fill="single"
+				type="text"
+				label="Quantity"
+				placeholder="Specify the quantity"
+				:showFieldError="true"
+			>
+			</InputComp>
+		</div>
 		<div class="confirm-card-choice">
 			<div class="confirm-submit">
 				<button class="cancel" @click="close">Cancel</button>
@@ -15,16 +27,33 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { useMarketStore } from "@/stores/market.store";
+import InputComp from "../utils/InputComp.vue";
+import { defineComponent, ref } from "vue";
+import { buyOfferValidator } from "@/scripts/helpers/formValidator.js"
 
 export default defineComponent({
 	emits: ["update:active"],
-	props: {
-		active: { type: Boolean, required: true }
+	components: {
+		InputComp,
 	},
-	setup(_props, { emit }) {
+	props: {
+		active: { type: Boolean, required: true },
+		tradeId: { type: String, required: false },
+	},
+	setup(props, { emit }) {
+		const tradeId = ref(props.tradeId);
+		const marketStore = useMarketStore();
+		const mode = ref("passive");
+
+		const form = buyOfferValidator();
 		
-		const buyOffer = () => {
+		const buyOffer = async () => {
+			const res = await form.validate();
+			if(!res.valid) return mode.value = "aggresive";
+			const { quantity } = form.values;
+
+			await marketStore.buyOfferTrade(tradeId.value, quantity)
 			emit("update:active", false);
 		}
 
@@ -35,6 +64,8 @@ export default defineComponent({
 		return {
 			buyOffer,
 			close,
+			mode,
+			form,
 		}
 	}
 })
@@ -46,7 +77,7 @@ export default defineComponent({
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	gap: 3rem;
+	gap: 2rem;
 	width: 300px;
 
 	&-title {
@@ -58,6 +89,13 @@ export default defineComponent({
 		h2 {
 			font-size: 18px;
 		}
+	}
+
+	&-qtt {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	&-choice {

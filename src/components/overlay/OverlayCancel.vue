@@ -15,16 +15,21 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { useMarketStore } from "@/stores/market.store";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
 	emits: ["update:active"],
 	props: {
-		active: { type: Boolean, required: true }
+		active: { type: Boolean, required: true },
+		tradeId: { type: String, required: false },
 	},
-	setup(_props, { emit }) {
+	setup(props, { emit }) {
+		const tradeId = ref(props.tradeId);
+		const marketStore = useMarketStore();
 		
-		const cancelOffer = () => {
+		const cancelOffer = async () => {
+			await marketStore.deleteUserTrade(tradeId.value);
 			emit("update:active", false);
 		}
 
