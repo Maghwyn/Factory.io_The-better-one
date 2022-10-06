@@ -3,10 +3,6 @@
         <CardProfile :user="userData"></CardProfile>
         <div class="user-card-separator"></div>
         <CardResource :rss="rss"></CardResource>
-        <!-- <div class="user-resource-cell" v-for="(resources, key) in rss" :key="key">
-			<span>{{ resources.id }}</span>
-			<span>{{ resources.money }}</span>
-		</div> -->
     </div>
 
 </template>
@@ -54,6 +50,7 @@ export default defineComponent({
     padding: 15px 40px;
     overflow: hidden;
     gap: 2rem;
+    height: 40vh;
 
     &-separator {
         height: 1px;

@@ -1,8 +1,21 @@
 <template>
-	<div>
-		<UserCard :user="user" :rss="rss" />
+	<div class="div-game">
+		<FactoryList class="facto_list"></FactoryList>
+		<UserCard class="user_card" :user="user" :rss="rss" />
 	</div>
 </template>
+
+<style>
+.div-game {
+	display: flex;
+}
+
+.facto_list {}
+
+.user_card {
+	margin-left: 5%;
+}
+</style>
 
 <script>
 import { useUserStore } from "@/stores/user.store";
@@ -23,7 +36,7 @@ export default defineComponent({
 	},
 	components: {
 		UserCard,
-    FactoryList
+		FactoryList,
 	}
 })
 </script>
