@@ -27,8 +27,20 @@
 								</th>
 							</tr>
 						</thead>
+						<tbody v-if="usersDisplayed.length > 0">
+							<UsersCard v-for="(user, index) in usersDisplayed" :key='index' :user="user" />
+						</tbody>
 						<tbody>
-							<UsersCard v-for="(user, index) in usersList" :key='index' :user="user" />
+							<thead class="pagination">
+								<tr>
+									<th class="pagination-content">
+										<button @click="previousNav"> - </button>
+										<PaginationComponent v-for="item in pagesNumber" :page="item" :key="item" @changePage="changePage">
+										</PaginationComponent>
+										<button @click="nextNav"> + </button>
+									</th>
+								</tr>
+							</thead>
 						</tbody>
 					</table>
 				</div>
@@ -39,19 +51,106 @@
 
 <script>
 import { useAdminStore } from '@/stores/admin.store';
-import { computed } from "vue";
+import { computed, watch, ref, onMounted } from "vue";
 import UsersCard from './UsersCard.vue';
+import PaginationComponent from '../pagination/PaginationComponent.vue';
 
 export default {
-	components: { UsersCard },
+	components: { UsersCard,  PaginationComponent },
     setup() {
         const adminStore = useAdminStore();
         const usersList = computed(() => adminStore.users);
-		console.log("user", usersList.value);
+		const usersDisplayed = ref([])
+		const indexStart = ref(null);
+		const indexEnd = ref(null);
         adminStore.getAllUsers();
+		const pagesNumber = computed(() => Math.ceil(adminStore.users.length / 5) );
+		
+		const changePage = (e) => {
+			usersDisplayed.value = []
+			indexStart.value = (e * 5) - 5
+			if (e*5 >= adminStore.users.length) {
+				indexEnd.value = adminStore.users.length
+			} else {
+				indexEnd.value = (e * 5)
+			}
+			for (let i = indexStart.value; i < indexEnd.value; i++) {
+					usersDisplayed.value.push(usersList.value[i])
+				}
+		}
+		watch(usersList, value => {
+			if (value.length > 0) {
+				for (let i = indexStart.value; i < indexEnd.value; i++) {
+					usersDisplayed.value.push(usersList.value[i])
+				}
+			}
+		})
+		onMounted(() => {
+			indexStart.value = 0
+			indexEnd.value = 5
+		})
+
+
+		const previousNav = () => {
+			if (indexStart.value === 0 && indexEnd.value === 5) {
+				return
+			}
+			else {
+				indexStart.value -= 5
+				if (indexEnd.value >= usersList.value.length) {
+					indexEnd.value = (pagesNumber.value * 5) - 5
+				} else {
+					indexEnd.value -= 5
+				}
+				usersDisplayed.value = []
+				for (let i = indexStart.value; i < indexEnd.value; i++) {
+					usersDisplayed.value.push(usersList.value[i])
+				}
+			}
+		}
+
+		const nextNav = () => {
+			if (indexStart.value === (pagesNumber.value * 5) - 5) {
+				return
+			}
+			else {
+				indexStart.value += 5
+				indexEnd.value += 5
+				
+				if (indexEnd.value >= usersList.value.length) {
+					indexEnd.value = usersList.value.length
+				} 
+				usersDisplayed.value = []
+				for (let i = indexStart.value; i < indexEnd.value; i++) {
+					usersDisplayed.value.push(usersList.value[i])
+				}
+			}
+		}
         return {
             usersList,
+			previousNav,
+			nextNav,
+			pagesNumber,
+			changePage,
+			usersDisplayed,
+			indexStart,
+			indexEnd
         };
     },
 }
 </script>
+
+<style lang="scss" scoped>
+	.pagination {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+
+		&-content {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			gap: 0.5rem;
+		}
+	}
+</style>
