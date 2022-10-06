@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="market">
 		<div>
 			<UserTestCard></UserTestCard>
 		</div>
@@ -18,3 +18,9 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss">
+.market {
+	padding: 15px;
+}
+</style>

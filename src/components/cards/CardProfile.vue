@@ -1,17 +1,17 @@
 <template>
-	<div>
-		<div>
-			<img src="" alt="" />
+	<div class="user-profile">
+		<div class="user-profile-img">
+			<img src="" alt=""/>
 		</div>
-		<div>
+		<div class="user-profile-info">
 			<div>
-				<span>
+				<span class="username">
 					{{ user }}
 				</span>
 			</div>
 			<div>
-				<span></span>
-				<span></span>
+				<span class="coin">COINS LOGO</span>
+				<span class="factory">Factory possessed</span>
 			</div>
 		</div>
 	</div>
@@ -21,15 +21,73 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-	setup() {
-
-	},
 	props: {
-		user: { type: Object, required: true }
+		user: { 
+			type: Object, 
+			required: false,
+			default: () => {},
+		}
 	}
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.user-profile {
+	width: 100%;
+	height: 100px;
+	display: flex;
+	gap: 2rem;
 
+	&-img {
+		// width: 150px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		img {
+			width: 75px;
+			height: 75px;
+			border-radius: 50%;
+			background-color: gray;
+		}
+	}
+
+	&-info {
+		width: fit-content;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-direction: column;
+		gap: .5rem;
+
+		div {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			span {
+				color: black;
+
+				&.username {
+					font-size: 16px;
+					font-weight: 600;
+				}
+
+				&.coin {
+					font-size: 14px;
+					font-weight: 400;
+					margin-left: 20px;
+				}
+				
+				&.factory {
+					font-size: 14px;
+					font-weight: 400;
+					margin-left: 20px;
+				}
+			}
+		}
+	}
+}
 </style>
