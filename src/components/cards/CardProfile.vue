@@ -1,7 +1,8 @@
 <template>
 	<div class="user-profile">
 		<div class="user-profile-img">
-			<img src="" alt="" />
+			<img src="https://d.wattpad.com/story_parts/737845095/images/15a2c96351dcd0a5170250432904.jpg"
+				alt="user_img" />
 		</div>
 		<div class="user-profile-info">
 			<div>

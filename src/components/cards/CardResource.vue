@@ -41,6 +41,10 @@ export default defineComponent({
 		display: flex;
 		justify-content: space-between;
 		gap: 2rem;
+
+		span {
+			font-size: 13px;
+		}
 	}
 }
 </style>

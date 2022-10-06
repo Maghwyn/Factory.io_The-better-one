@@ -4,6 +4,11 @@
 			LOGO
 		</div>
 		<nav>
+			<div class="header-nav" v-if="isAdmin">
+				<router-link to="/admin">
+					Dashboard
+				</router-link>
+			</div>
 			<div class="header-nav">
 				<router-link to="/app/game">
 					Game
@@ -14,17 +19,30 @@
 					Market
 				</router-link>
 			</div>
+			<div class="header-nav">
+				<router-link to="/" @click="logout">
+					Logout
+				</router-link>
+			</div>
 		</nav>
 	</header>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { useAuthStore } from '@/stores/auth.store';
+import { defineComponent, computed } from "vue";
+import { clearSession } from "@/scripts/helpers/clearSession"
 
 export default defineComponent({
 	setup() {
+		const authStore = useAuthStore();
+		const isAdmin = computed(() => authStore.isAdmin)
+		const logout = () => {
+			clearSession()
+		}
 		return {
-
+			isAdmin,
+			logout
 		}
 	}
 })
@@ -34,6 +52,7 @@ export default defineComponent({
 header {
 	width: 100%;
 	height: 70px;
+	min-height: 70px;
 	display: flex;
 	justify-content: space-between;
 	padding: 0 50px;
