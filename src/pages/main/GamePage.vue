@@ -8,6 +8,7 @@
 import { useUserStore } from "@/stores/user.store";
 import { defineComponent, computed } from "vue";
 import UserCard from "@/components/cards/UserCard.vue";
+import FactoryList from '../../components/FactoryList.vue'
 
 export default defineComponent({
 	setup() {
@@ -22,10 +23,7 @@ export default defineComponent({
 	},
 	components: {
 		UserCard,
+    FactoryList
 	}
 })
 </script>
-
-<style>
-
-</style>
