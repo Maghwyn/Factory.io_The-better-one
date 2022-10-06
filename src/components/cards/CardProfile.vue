@@ -1,11 +1,12 @@
 <template>
 	<div>
 		<div>
-			<img src="" alt=""/>
+			<img src="" alt="" />
 		</div>
 		<div>
 			<div>
 				<span>
+					{{ user }}
 				</span>
 			</div>
 			<div>
@@ -22,7 +23,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
 	setup() {
 
-	}	
+	},
+	props: {
+		user: { type: Object, required: true }
+	}
 })
 </script>
 

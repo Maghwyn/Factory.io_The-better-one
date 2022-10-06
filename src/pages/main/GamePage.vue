@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<UserCard :user="user" />
+		<UserCard :user="user" :rss="rss" />
 	</div>
 </template>
 
@@ -12,10 +12,13 @@ import UserCard from "@/components/cards/UserCard.vue";
 export default defineComponent({
 	setup() {
 		const userStore = useUserStore();
+		userStore.getMyInventory()
 		const user = computed(() => userStore.user);
-
+		const rss = computed(() => userStore.inventory);
+		console.log(rss)
 		return {
 			user,
+			rss
 		}
 	},
 	components: {
@@ -25,5 +28,5 @@ export default defineComponent({
 </script>
 
 <style>
-	
+
 </style>

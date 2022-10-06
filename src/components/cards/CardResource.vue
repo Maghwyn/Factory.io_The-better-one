@@ -2,7 +2,9 @@
 	<div>
 		<div>
 			<!-- v-for above -->
-			<span></span>
+			<span>
+				{{ rss}}
+			</span>
 		</div>
 	</div>
 </template>
@@ -15,6 +17,9 @@ export default defineComponent({
 		return {
 
 		}
+	},
+	props: {
+		rss: { type: Array, required: true }
 	}
 })
 </script>
