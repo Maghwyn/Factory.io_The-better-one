@@ -42,27 +42,27 @@ export default defineComponent({
 
 	border-radius: 15px;
 	box-shadow: 0px 0px 5px black;
-	padding: 15px 20px;
+	padding: 20px 20px;
 	overflow: hidden;
-	gap: 1.5rem;
+	gap: .75rem;
 
 	div {
-		width: 125px;
+		width: 135px;
 		height: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background-color: gray;
+		background-color: #fcbb6b;
 		border-radius: 8px;
 
 		&:hover {
-			background-color: lightgray;
+			background-color: #fec47d;
 		}
 
 		button {
 			width: 100%;
 			height: 100%;
-			color: white;
+			color: black;
 			font-size: 14px;
 			font-weight: 600;
 		}
