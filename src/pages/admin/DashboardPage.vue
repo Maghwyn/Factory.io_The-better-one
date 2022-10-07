@@ -24,12 +24,19 @@ import FactoriesTable from '@/components/Admin/factories/FactoriesTable.vue';
 import SelectedOptionsNav from '@/components/Admin/SelectedOptionsNav.vue';
 import { ref } from "vue";
 import LoadingComp from '@/components/utils/LoadingComp.vue';
+import { useAdminStore } from '@/stores/admin.store';
 
 export default {
 	components: { RessourcesCells, UsersCells, ModelsTable, FactoriesTable, SelectedOptionsNav, LoadingComp },
 	setup() {
+		const adminStore = useAdminStore()
 		const options = ref(1)
 		const isLoading = ref(false)
+
+		adminStore.getAllFactories();
+		adminStore.getAllModels();
+		adminStore.getAllRessources();
+		adminStore.getAllUsers();
 		const changeOption = (optionSelected) => {
 			isLoading.value = true
 			options.value = optionSelected

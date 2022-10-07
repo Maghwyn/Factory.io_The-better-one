@@ -1,67 +1,46 @@
 <template>
 	<div class="overlay">
 		<div class='overlay-head'>
-			<h3>Ajouter une ressource pour que les factories puissent y accéder</h3>
+			<h3>Ajouter un model de factory</h3>
 		</div>
-		<form class='overlay-formModel'> 
+		<div>
+			voici les ressources disponibles
+		</div>
+		<div v-for="(resource, index) in resources" :key="index">
+			<div class="container">
+				<div>id: {{resource.id}}</div>
+				<div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell"><img class="w-full h-full rounded-full"
+						:src="resource.image_url" /></div>
+				<div>{{resource.name}}</div>
+				<div>base_value: {{resource.base_value}}</div>
+			</div>
+		</div>
+		<div class="border-separate border border-slate-500"></div>
+		<form class='overlay-formModel'>
 			<div class="overlay-formModel-input">
 				<label>resource_id: </label>
-				<input
-					id="resource_id"
-					label="resource_id"
-					placeholder="resource_id"
-					fill="grow"
-					type="number"
-					v-model="formModel.resource_id"
-					required="true"
-				/>
+				<input id="resource_id" label="resource_id" placeholder="resource_id" fill="grow" type="number"
+					v-model="formModel.resource_id" required="true" />
 			</div>
 			<div class="overlay-formModel-input">
 				<label>upgrade_base_value: </label>
-				<input
-					id="upgrade_base_value"
-					label="upgrade_base_value"
-					placeholder="upgrade_base_value"
-					fill="grow"
-					type="number"
-					v-model="formModel.upgrade_base_value"
-				/>
+				<input id="upgrade_base_value" label="upgrade_base_value" placeholder="upgrade_base_value" fill="grow"
+					type="number" v-model="formModel.upgrade_base_value" />
 			</div>
 			<div class="overlay-formModel-input">
 				<label>upgrade_coef: </label>
-				<input
-					id="upgrade_coef"
-					type="number" 
-					name="upgrade_coef"
-					label="upgrade_coef"
-					placeholder="upgrade_coef"
-					fill="grow"
-					v-model="formModel.upgrade_coef"
-				/>
+				<input id="upgrade_coef" type="number" name="upgrade_coef" label="upgrade_coef"
+					placeholder="upgrade_coef" fill="grow" v-model="formModel.upgrade_coef" />
 			</div>
 			<div class="overlay-formModel-input">
 				<label>upgrade_resource_id: </label>
-				<input
-					id="upgrade_resource_id"
-					type="number" 
-					name="upgrade_resource_id"
-					label="upgrade_resource_id"
-					placeholder="upgrade_resource_id"
-					fill="grow"
-					v-model="formModel.upgrade_resource_id"
-				/>
+				<input id="upgrade_resource_id" type="number" name="upgrade_resource_id" label="upgrade_resource_id"
+					placeholder="upgrade_resource_id" fill="grow" v-model="formModel.upgrade_resource_id" />
 			</div>
 			<div class="overlay-formModel-input">
 				<label>generate_per_minute: </label>
-				<input
-					id="generate_per_minute"
-					type="number" 
-					name="generate_per_minute"
-					label="generate_per_minute"
-					placeholder="generate_per_minute"
-					fill="grow"
-					v-model="formModel.generate_per_minute"
-				/>
+				<input id="generate_per_minute" type="number" name="generate_per_minute" label="generate_per_minute"
+					placeholder="generate_per_minute" fill="grow" v-model="formModel.generate_per_minute" />
 			</div>
 			<div class='overlay-formModel-box'>
 				<div class='overlay-formModel-box-btns'>
@@ -75,12 +54,13 @@
 
 <script>
 import { useAdminStore } from '@/stores/admin.store';
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, computed } from 'vue';
 
 export default defineComponent({
 	emits: ['update:active'],
 	setup(props, { emit }) {
 		const adminStore = useAdminStore();
+		const resources = computed(() => adminStore.allRessources)
 		const formModel = reactive({
 			resource_id: 0,
             upgrade_base_value: 0,
@@ -108,7 +88,8 @@ export default defineComponent({
 		return {
 			submitHandler,
 			closeModal,
-			formModel
+			formModel,
+			resources
 		}
 	}
 })
@@ -166,5 +147,10 @@ export default defineComponent({
 			}
 		}
 	}
+}
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>

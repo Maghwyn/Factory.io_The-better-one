@@ -57,7 +57,6 @@ export default {
 		const ressources = computed(() => adminStore.allRessources)
 		const active = ref(false)
 
-		adminStore.getAllRessources();
 		const addRessource = () => {
 			active.value = true
 		}

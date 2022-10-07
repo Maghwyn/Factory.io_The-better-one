@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
 import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, levelUpOneFactory, getAllModels } from '@/API/factory.req';
+import { useUserStore } from './user.store';
 
 const gameStoreDefaultState = () => {
 	return {
@@ -32,15 +33,17 @@ export const useGameStore = defineStore('game', {
 			this.models.push(modelList);
 			// Perhaps update the user factory at the same time, or dynamically.
 		},
-
-
 		async getAllUserFactories() {
+			console.log("Yo")
+
 			const res = await getAllFactories();
 			if(res?.response !== undefined) return;
 			const factories = res.data || [];
-			if(factories.length > 1) return;
+			if(factories.length < 1) return;
 
 			this.factories = factories;
+			console.log(this.factories)
+
 		},
 		async getSingleFactory(factoryId) {
 			const res = await getOneFactory(factoryId);
@@ -83,7 +86,16 @@ export const useGameStore = defineStore('game', {
 
 			if(factoryIndex === - 1) return;
 			this.factories[factoryIndex] = factory;
+			this.actualFactory[0] = factory
 			// Perhaps update the user factory at the same time, or dynamically.
+			const userStore = useUserStore();
+			const userFactories = userStore.user.factories;
+			userFactories.forEach(element => {
+				if(element.id === factory.id){
+					element = factory
+				}
+			});
+			console.log(userStore.user);
 		},
 		async getFactoryModal(factoryId){
 			this.actualFactory = await this.getSingleFactory(factoryId)
