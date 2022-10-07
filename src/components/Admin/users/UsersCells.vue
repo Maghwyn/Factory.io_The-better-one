@@ -30,19 +30,15 @@
 						<tbody v-if="usersDisplayed.length > 0">
 							<UsersCard v-for="(user, index) in usersDisplayed" :key='index' :user="user" />
 						</tbody>
-						<tbody>
-							<thead class="pagination">
-								<tr>
-									<th class="pagination-content">
-										<button @click="previousNav"> - </button>
-										<PaginationComponent v-for="item in pagesNumber" :page="item" :key="item" @changePage="changePage">
-										</PaginationComponent>
-										<button @click="nextNav"> + </button>
-									</th>
-								</tr>
-							</thead>
-						</tbody>
 					</table>
+					<div class="min-w-full flex">
+						<div class="pagination-content">
+							<button @click="previousNav"> - </button>
+							<PaginationComponent :class="actualPage === item ? 'active': 'notActive'" v-for="item in pagesNumber" :page="item" :key="item" @changePage="changePage" >
+							</PaginationComponent>
+							<button @click="nextNav"> + </button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -63,10 +59,12 @@ export default {
 		const usersDisplayed = ref([])
 		const indexStart = ref(null);
 		const indexEnd = ref(null);
+		const actualPage = ref(1)
         adminStore.getAllUsers();
 		const pagesNumber = computed(() => Math.ceil(adminStore.users.length / 5) );
 		
 		const changePage = (e) => {
+			actualPage.value = e
 			usersDisplayed.value = []
 			indexStart.value = (e * 5) - 5
 			if (e*5 >= adminStore.users.length) {
@@ -96,6 +94,7 @@ export default {
 				return
 			}
 			else {
+				actualPage.value -= 1
 				indexStart.value -= 5
 				if (indexEnd.value >= usersList.value.length) {
 					indexEnd.value = (pagesNumber.value * 5) - 5
@@ -114,6 +113,7 @@ export default {
 				return
 			}
 			else {
+				actualPage.value += 1
 				indexStart.value += 5
 				indexEnd.value += 5
 				
@@ -134,7 +134,8 @@ export default {
 			changePage,
 			usersDisplayed,
 			indexStart,
-			indexEnd
+			indexEnd,
+			actualPage
         };
     },
 }
@@ -142,9 +143,6 @@ export default {
 
 <style lang="scss" scoped>
 	.pagination {
-		width: 100%;
-		display: flex;
-		justify-content: center;
 
 		&-content {
 			width: 100%;
@@ -152,5 +150,11 @@ export default {
 			justify-content: center;
 			gap: 0.5rem;
 		}
+	}
+	.active {
+		color: #7831cd;
+	}
+	.notActive {
+		color: #c9c1d2;
 	}
 </style>

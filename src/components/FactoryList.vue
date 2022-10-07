@@ -32,20 +32,18 @@
         <OverlayComp v-model:active="active" :fullSize="false">
             <div class="bg-slate-800 bg-opacity-50 flex justify-center items-center">
                 <div class="bg-white px-16 py-14 rounded-md text-center">
-                    <h3 class="text-xl mb-4 font-bold text-slate-500">
-						Do you want to buy a factory ? ({{nextFactoryPrice.cost }})</h3>
-                    <p> Current money : {{ inventory.money }}</p>
+                    <h3 class="text-xl mb-4 font-bold text-slate-500">Do you want to buy a factory ? ({{
+                    factoryCost }})</h3>
+                    <p> Current money : {{ money }}</p>
                     <div class="btn_div">
                         <div class="btn_parent">
                             <button @click="cancel()" class="btn_child_cancel">Cancel</button>
                         </div>
                         <div class="btn_parent">
-                            <button v-if="nextFactoryPrice.cost > inventory.money" disabled
-                                class="btn_child_disabled">Pay
-                                {{nextFactoryPrice.cost}}
-							</button>
+                            <button v-if="factoryCost > money" disabled class="btn_child_disabled">Pay
+                                {{factoryCost}}</button>
                             <button v-else @click="gacha()" class="btn_child">
-                                Pay {{nextFactoryPrice.cost}}
+                                Pay {{factoryCost}}
                             </button>
                         </div>
                     </div>
@@ -82,6 +80,9 @@ export default defineComponent({
         const test = [
             "Hello", "Welcome", "Whatever"
         ]
+        const money = computed(() => userStore.inventory.money)
+        const factoryCost = computed(() => userStore.nextFactoryPrice.cost)
+
         var resource_type = []
         var resource_prod = []
         var level = []
@@ -126,6 +127,7 @@ export default defineComponent({
         const chooseFactory = (id_choosed) => {
             gameStore.createFactory(id_choosed)
             gameStore.getFactoriesModels();
+            userStore.getMyInventory();
             visible.value = false
         }
 
@@ -142,13 +144,14 @@ export default defineComponent({
             addFactory,
             chooseFactory,
             getModal,
+            money,
+            factoryCost,
             visible,
             test,
             resource_type,
             resource_prod,
             level,
             factories,
-            userStore,
             active,
             id,
 			inventory,
