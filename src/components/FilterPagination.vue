@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { useMarketStore } from "@/stores/market.store";
 import { defineComponent, ref, watch, computed, watchEffect } from "vue";
 
 export default defineComponent({
@@ -42,7 +43,7 @@ export default defineComponent({
 		max: { type: Number, required: true },
 	},
 	emits: ["update:page"],
-	setup(props, { emit }) {
+	setup(props) {
 		const currentPage = computed(() => props.page);
 		const updatePage = ref(currentPage.value);
 		const maxPage = computed(() => props.max);
@@ -66,7 +67,13 @@ export default defineComponent({
 				disablePrev.value = true;
 			}
 		});
-		watch(updatePage, (value) => emit("update:page", value));
+
+
+		watch(updatePage, (value) => {
+			const marketStore = useMarketStore();
+			marketStore.setPagePagination(value);
+			// emit("update:page", value)
+		});
 
 		const previous = () => {
 			if (updatePage.value > 1) {
@@ -77,14 +84,17 @@ export default defineComponent({
 		};
 
 		const next = () => {
+			console.log("bro4")
 			if (updatePage.value < maxPage.value) {
 				updatePage.value++;
 				if (disablePrev.value) disablePrev.value = false;
 			}
 			if (updatePage.value === maxPage.value) disableNext.value = true;
+			console.log("bro3")
 		};
 
 		const goto = (number) => {
+			console.log("bro")
 			if (number !== updatePage.value) updatePage.value = number;
 			if (updatePage.value < maxPage.value && disableNext.value)
 				disableNext.value = false;
@@ -94,6 +104,7 @@ export default defineComponent({
 		};
 
 		watchEffect(() => {
+			console.log("bro2")
 			if (maxPage.value < 7) return (displayPages.value = arrMaxPage.value);
 
 			const cloned = [...arrMaxPage.value];

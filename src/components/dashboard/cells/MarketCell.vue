@@ -78,14 +78,16 @@ export default {
 		OverlayConfirm,
 	},
 	setup(props) {
-		const offer = ref(props.offer);
+		const offer = computed(() => props.offer);
 		const activeBuy = ref(false);
 		const activeCancel = ref(false);
 		const marketStore = useMarketStore();
-		marketStore.getUserTrades();
 
-		const userTrades = computed(() => marketStore.userTrades);
-		const isOfferOfUser = computed(() => userTrades.value.findIndex((trade) => trade.id === offer.value.id));
+		const userTrades = computed(() => marketStore.getCalculatedUserTrades);
+		const isOfferOfUser = computed(() => {
+			marketStore.paginationTrades;
+			return userTrades.value.findIndex((trade) => trade.owner.id === offer.value.owner.id)
+		})
 
 		const buyOffer = () => {
 			activeBuy.value = true;

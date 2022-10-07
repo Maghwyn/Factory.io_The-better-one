@@ -17,7 +17,7 @@
 
         <div v-if="factories.length > 0" class="flex w-full flex-wrap justify-around">
             <FactoryCard v-for="(item, index) in factories" :key="index" :level="item.level" @click="getModal($event)"
-                :resource_prod="item.model.generate_per_minute" :resource_type="item.model.resource.name">
+                :id="item.id" :resource_prod="item.model.generate_per_minute" :resource_type="item.model.resource.name">
             </FactoryCard>
         </div>
 
@@ -89,7 +89,7 @@ export default defineComponent({
         //const form = createFactoriesSelector();
         const inventory = computed(() => userStore.inventory)
         const money = computed(() => inventory.value.money)
-        var priceOfFactory = computed(() => Math.pow(8, factories.value.length + 1));
+        const priceOfFactory = computed(() => Math.pow(8, factories.value.length + 1));
         const charged = ref(false)
         const factoryLimit = computed(() => userStore.nextFactoryPrice.factory_limit)
         const test = [
@@ -155,7 +155,15 @@ export default defineComponent({
         }
 
         const getModal = (event) => {
-            const factoryId = event.target.id
+            var factoryId = ""
+            if (event.target.id == '') {
+                factoryId = event.target.parentNode.id
+                if (event.target.parentNode.id == '') {
+                    factoryId = event.target.parentNode.parentNode.id
+                }
+            } else {
+                factoryId = event.target.id
+            }
             gameStore.getFactoryModal(factoryId)
         }
 
