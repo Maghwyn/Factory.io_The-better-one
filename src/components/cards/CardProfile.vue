@@ -12,7 +12,7 @@
 			<div>
 				<span class="coin">Income : {{ user.income }}</span>
 				<span class="coin">Money : {{ inventory.money }}</span>
-				<span class="factory">Factories : {{ user.factories.length }}</span>
+				<span class="factory">Factories : {{ factoLen }}</span>
 				<span class="factory">Factory limit : {{ priceFactoryLimit.factory_limit }}</span>
 			</div>
 		</div>
@@ -29,6 +29,7 @@ export default defineComponent({
 		const inventory = computed(() => userStore.inventory);
 		const user = computed(() => userStore.user);
 		const priceFactoryLimit = computed(() => userStore.nextFactoryPrice);
+		const factoLen = computed(() => user?.value?.factories?.length);
 
 		watch(priceFactoryLimit, val => {
 			console.log(val)
@@ -37,6 +38,7 @@ export default defineComponent({
 		return {
 			priceFactoryLimit,
 			inventory,
+			factoLen,
 			user,
 		}
 	}

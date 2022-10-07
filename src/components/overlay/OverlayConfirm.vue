@@ -40,7 +40,7 @@ export default defineComponent({
 	},
 	props: {
 		active: { type: Boolean, required: true },
-		tradeId: { type: String, required: false },
+		tradeId: { type: Number, required: false },
 	},
 	setup(props, { emit }) {
 		const tradeId = ref(props.tradeId);

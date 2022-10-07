@@ -25,14 +25,18 @@ export const useUserStore = defineStore('user', {
 			this.user = { ...user };
 		},
 		async getMyInventory() {
-			this.isFetching = true;
-			const res = await getOneInventory();
-			if(res?.response !== undefined) return;
+			try {
+        this.isFetching = true;
+				const res = await getOneInventory();
+				if(res?.response !== undefined) return;
 
-			const userInventory = res.data;
-			if(!userInventory) return;
-			this.inventory = userInventory;
-			this.isFetching = false;
+				const userInventory = res.data;
+				if(!userInventory) return;
+				this.inventory = userInventory;
+        this.isFetching = false;
+			} catch(e) {
+				// console.log(e);
+			}
 		},
 		async buyFactoryLimit() {
 			const res = await buyFactoryLimit();
@@ -46,6 +50,10 @@ export const useUserStore = defineStore('user', {
 			const res = await checkPriceFactoryLimit();
 			if(res?.response !== undefined) return;
 			this.nextFactoryPrice = res.data
+		},
+		increaseUserFactory(factory) {
+			this?.user?.factories?.push(factory);
+			this.user.income++;
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length

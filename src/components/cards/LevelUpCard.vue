@@ -60,13 +60,13 @@ export default defineComponent({
         const gameStore = useGameStore();
         const userStore = useUserStore();
 
-        const factory = computed(() => gameStore.actualFactory);
-        const nameResource = computed(() => factory.value.model.resource.name);
-        const userInventory = computed(() => userStore.inventory);
-        const inventoryResources = computed(() => userInventory.value.inventory_resources.quantity);
-        const generation = computed(() => factory.value.model.generate_per_minute * factory.value.level);
-        const nextLvlGeneration = computed(() => (factory.value.model.generate_per_minute) * (factory.value.level + 1));
-        const nextLvlCost = computed(() => factory.value.level ** factory.value.model.upgrade_coef);
+        const factory = computed(() => gameStore?.actualFactory);
+        const nameResource = computed(() => factory?.value?.model?.resource.name);
+        const userInventory = computed(() => userStore?.inventory);
+        const inventoryResources = computed(() => userInventory?.value?.inventory_resources?.quantity);
+        const generation = computed(() => factory?.value?.model?.generate_per_minute * factory?.value?.level);
+        const nextLvlGeneration = computed(() => (factory?.value?.model?.generate_per_minute) * (factory?.value?.level + 1));
+        const nextLvlCost = computed(() => factory.value?.level ** factory?.value?.model?.upgrade_coef);
         const show = ref(false)
 
         const levelUp = () => {
