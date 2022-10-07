@@ -23,11 +23,13 @@
 <script>
 import { defineComponent, computed } from "vue";
 import { useResourceStore } from '@/stores/resource.store'
+import { useUserStore } from '@/stores/user.store'
 
 export default defineComponent({
 	setup() {
 		const resourceStore = useResourceStore();
 		resourceStore.getAllResources()
+		const userStore = useUserStore();
 		const displayRss = computed(() => resourceStore.displayUserRss);
 		const allResources = computed(() => resourceStore.resources);
 		const inventory = computed(() => userStore.inventory)
