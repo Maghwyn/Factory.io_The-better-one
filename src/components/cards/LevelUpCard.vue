@@ -34,8 +34,7 @@
                         </div>
                         <div class="btn_parent">
                             <button v-if=" nextLvlCost > inventoryResources" disabled
-                                class="btn_child_disabled">Pay
-                                {{userStore.nextFactoryPrice.cost}}</button>
+                                class="btn_child_disabled">Pay</button>
                             <button v-else @click="levelUp()" class="btn_child">
                                 Pay {{nextLvlCost}}
                             </button>
