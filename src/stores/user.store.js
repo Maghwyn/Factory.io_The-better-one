@@ -14,6 +14,7 @@ const userStoreDefaultState = () => {
 		},
 		inventory: {},
 		nextFactoryPrice : "",
+		isFetching: false,
 	}
 }
 
@@ -24,12 +25,14 @@ export const useUserStore = defineStore('user', {
 			this.user = { ...user };
 		},
 		async getMyInventory() {
+			this.isFetching = true;
 			const res = await getOneInventory();
 			if(res?.response !== undefined) return;
 
 			const userInventory = res.data;
 			if(!userInventory) return;
 			this.inventory = userInventory;
+			this.isFetching = false;
 		},
 		async buyFactoryLimit() {
 			const res = await buyFactoryLimit();

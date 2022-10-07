@@ -1,6 +1,6 @@
 <template>
 	<div class="user-resource">
-		<div v-if="allResources.length > 0">
+		<div v-if="allResources.length > 0 && inventory && !isFetching">
 			<div class="user-resource-cell">
 				<div v-for="(resources, key) in displayRss.found" :key="key" class="box_rss">
 					<span>{{ resources.name }}</span>
@@ -29,11 +29,16 @@ export default defineComponent({
 		const resourceStore = useResourceStore();
 		resourceStore.getAllResources()
 		const displayRss = computed(() => resourceStore.displayUserRss);
-		const allResources = computed(() => resourceStore.resources)
+		const allResources = computed(() => resourceStore.resources);
+		const inventory = computed(() => userStore.inventory)
+		const isFetching = computed(() => userStore.isFetching)
+		setInterval(userStore.getMyInventory(), 30000);
 
 		return {
 			displayRss,
-			allResources
+			allResources,
+			inventory,
+			isFetching
 		}
 	}
 
