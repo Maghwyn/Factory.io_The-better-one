@@ -34,6 +34,6 @@ export const buyFactoryLimit = async (tradeId, quantity) => {
 export const buyOneTrade = async (tradeId, quantity) => {
 	return await http.post('/trades/buy', {
 		id: tradeId,
-		quantity,
+		quantity: parseInt(quantity),
 	})
 }

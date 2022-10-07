@@ -15,6 +15,7 @@ export const useGameStore = defineStore('game', {
 	state: () => gameStoreDefaultState(),
 	actions: {
 		async createFactory(factoryModelId) {
+			const userStore = useUserStore();
 			const res = await createOneFactory(factoryModelId);
 			if(res?.response !== undefined) return;
 
@@ -22,6 +23,7 @@ export const useGameStore = defineStore('game', {
 			if(!factory) return;
 
 			this.factories.push(factory);
+			userStore.increaseUserFactory(factory);
 			// Perhaps update the user factory at the same time, or dynamically.
 		},
 		async getFactoriesModels() {
