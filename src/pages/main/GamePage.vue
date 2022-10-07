@@ -57,7 +57,6 @@ export default defineComponent({
 		}, { deep: true })
 
 		return {
-			getFactoryModal,
 			user,
 			isLvlUp,
 
