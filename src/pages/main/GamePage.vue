@@ -12,6 +12,10 @@
 <style>
 .div-game {
 	display: flex;
+	background-color: #353941;
+	width: 100%;
+	height: 100%;
+	padding: 15px;
 }
 
 

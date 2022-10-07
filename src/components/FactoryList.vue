@@ -4,13 +4,14 @@
 
             <!-- <DropdownFilter></DropdownFilter> -->
 
-            <DropdownFilter id="factories" row="single" mode="tags" :options="test" :canClear="true"
+            <DropdownFilter id="factories" row="double-no-gap" mode="tags" :options="test" :canClear="true"
                 :placeholder="`Filters`" verbose="no-verbose" tag_color="blue" caret_size="22px" :caret_up="true"
-                dropdown_gap="medium" class="w-3/4 ml-2 mt-2 h-fit" />
+                dropdown_gap="medium" />
 
-            <button @click="addFactory()" type="button"
-                class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2 text-center mr-2 mb-2 mt-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 h-9">Add
-                Factory</button>
+            <button @click="addFactory" type="button"
+                class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2 text-center mr-2 mb-2 mt-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 h-9">
+                Add Factory
+            </button>
 
         </div>
 
@@ -31,26 +32,26 @@
         <OverlayComp v-model:active="active" :fullSize="false">
             <div class="bg-slate-800 bg-opacity-50 flex justify-center items-center">
                 <div class="bg-white px-16 py-14 rounded-md text-center">
-                    <h3 class="text-xl mb-4 font-bold text-slate-500">Do you want to buy a factory ? ({{
-                    userStore.nextFactoryPrice.cost }})</h3>
-                    <p> Current money : {{ userStore.inventory.money }}</p>
+                    <h3 class="text-xl mb-4 font-bold text-slate-500">
+						Do you want to buy a factory ? ({{nextFactoryPrice.cost }})</h3>
+                    <p> Current money : {{ inventory.money }}</p>
                     <div class="btn_div">
                         <div class="btn_parent">
                             <button @click="cancel()" class="btn_child_cancel">Cancel</button>
                         </div>
                         <div class="btn_parent">
-                            <button v-if="userStore.nextFactoryPrice.cost > userStore.inventory.money" disabled
+                            <button v-if="nextFactoryPrice.cost > inventory.money" disabled
                                 class="btn_child_disabled">Pay
-                                {{userStore.nextFactoryPrice.cost}}</button>
+                                {{nextFactoryPrice.cost}}
+							</button>
                             <button v-else @click="gacha()" class="btn_child">
-                                Pay {{userStore.nextFactoryPrice.cost}}
+                                Pay {{nextFactoryPrice.cost}}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </OverlayComp>
-
     </div>
 </template>
 
@@ -71,6 +72,9 @@ export default defineComponent({
         const active = ref(false)
         const userStore = useUserStore();
         const gameStore = useGameStore();
+		const inventory = computed(() => userStore.inventory);
+		const nextFactoryPrice = computed(() => userStore.nextFactoryPrice);
+
         const models = computed(() => gameStore.models);
         const visible = ref(false)
         const factories = computed(() => gameStore.factories);
@@ -93,7 +97,6 @@ export default defineComponent({
 
         const addFactory = () => {
             active.value = true
-
         }
 
         const cancel = () => {
@@ -111,6 +114,7 @@ export default defineComponent({
             }
 
             for (let i = 0; i < 3; i++) {
+				console.log(models.value)
                 resource_type.push(models.value[0][i].resource.name)
                 resource_prod.push(models.value[0][i].generate_per_minute)
                 level.push(models.value[0][i].upgrade_base_value)
@@ -146,8 +150,9 @@ export default defineComponent({
             factories,
             userStore,
             active,
-            id
-
+            id,
+			inventory,
+			nextFactoryPrice,
         }
     }
 })
@@ -234,6 +239,8 @@ export default defineComponent({
     width: 60%;
     border-style: solid;
     border-color: rgb(94, 94, 94);
+	background-color: white;
+	padding: 15px;
     border-width: thin;
     border-radius: 15px;
     justify-content: center;
@@ -243,5 +250,7 @@ export default defineComponent({
 
 .filterDiv {
     height: fit-content;
+	display: flex;
+	align-items: flex-start;
 }
 </style>

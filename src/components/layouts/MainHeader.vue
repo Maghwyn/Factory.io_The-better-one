@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="header-logo">
-			LOGO
+			<img src="/Factory.io-logo.png" alt="app_logo"/>
 		</div>
 		<nav>
 			<div class="header-nav" v-if="isAdmin">
@@ -19,7 +19,7 @@
 					Market
 				</router-link>
 			</div>
-			<div class="header-nav">
+			<div class="header-nav logout">
 				<router-link to="/" @click="logout">
 					Logout
 				</router-link>
@@ -50,6 +50,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.logout {
+	a {
+		background-color: #f03d3d !important;
+	}
+}
+
 header {
 	width: 100%;
 	height: 70px;
@@ -60,7 +66,7 @@ header {
 	background-color: #282c34;
 
 	.header-logo {
-		width: 200px;
+		width: 65px;
 		display: flex;
 		align-items: center;
 		color: white;
