@@ -72,7 +72,6 @@ export default {
 		const adminStore = useAdminStore();
 		const models = computed(() => adminStore.modelsFactories)
 		const active = ref(false);
-		adminStore.getAllModels();
 
 
 		const addModels = () => {
