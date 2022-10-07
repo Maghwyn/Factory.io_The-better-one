@@ -66,10 +66,7 @@ import OverlayComp from '@/components/utils/OverlayComp.vue';
 import OverlayCancel from '@/components/overlay/OverlayCancel.vue';
 import OverlayConfirm from '@/components/overlay/OverlayConfirm.vue';
 import { ref, computed } from "vue";
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+import { useMarketStore } from '@/stores/market.store';
 
 export default {
 	props: {
@@ -80,10 +77,15 @@ export default {
 		OverlayCancel,
 		OverlayConfirm,
 	},
-	setup() {
+	setup(props) {
+		const offer = ref(props.offer);
 		const activeBuy = ref(false);
 		const activeCancel = ref(false);
-		const isOfferOfUser = computed(() => getRandomInt(2) === 1);
+		const marketStore = useMarketStore();
+		marketStore.getUserTrades();
+
+		const userTrades = computed(() => marketStore.userTrades);
+		const isOfferOfUser = computed(() => userTrades.value.findIndex((trade) => trade.id === offer.value.id));
 
 		const buyOffer = () => {
 			activeBuy.value = true;

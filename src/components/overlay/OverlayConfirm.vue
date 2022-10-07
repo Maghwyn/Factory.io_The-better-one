@@ -30,7 +30,8 @@
 import { useMarketStore } from "@/stores/market.store";
 import InputComp from "../utils/InputComp.vue";
 import { defineComponent, ref } from "vue";
-import { buyOfferValidator } from "@/scripts/helpers/formValidator.js"
+import { buyOfferValidator } from "@/scripts/helpers/formValidator.js";
+import Swal from "sweetalert2";
 
 export default defineComponent({
 	emits: ["update:active"],
@@ -53,7 +54,14 @@ export default defineComponent({
 			if(!res.valid) return mode.value = "aggresive";
 			const { quantity } = form.values;
 
-			await marketStore.buyOfferTrade(tradeId.value, quantity)
+			try {
+				await marketStore.buyOfferTrade(tradeId.value, quantity)
+			} catch(e) {
+				Swal.fire({
+					icon: 'error',
+					title: e.response.data.message,
+				})
+			}
 			emit("update:active", false);
 		}
 

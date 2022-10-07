@@ -17,6 +17,7 @@
 <script>
 import { useMarketStore } from "@/stores/market.store";
 import { defineComponent, ref } from "vue";
+import Swal from "sweetalert2";
 
 export default defineComponent({
 	emits: ["update:active"],
@@ -29,7 +30,14 @@ export default defineComponent({
 		const marketStore = useMarketStore();
 		
 		const cancelOffer = async () => {
-			await marketStore.deleteUserTrade(tradeId.value);
+			try {
+				await marketStore.deleteUserTrade(tradeId.value);
+			} catch(e) {
+				Swal.fire({
+					icon: 'error',
+					title: e.response.data.message,
+				})
+			}
 			emit("update:active", false);
 		}
 

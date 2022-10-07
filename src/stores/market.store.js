@@ -22,7 +22,7 @@ const marketStoreDefaultState = () => {
 	return {
 		marketTrades: [],
 		userTrades: [],
-		filterBy: {},
+		filterById: -1,
 		paginationPage: 1,
 		paginationPerPage: 8,
 		sortBy: '',
@@ -33,7 +33,8 @@ export const useMarketStore = defineStore('market', {
 	state: () => marketStoreDefaultState(),
 	getters: {
 		filteredTrades: state => {
-			const tradeFilter = state.filterBy;
+			const tradeFilterId = state.filterById;
+			console.log("STORE ::", tradeFilterId)
 			const marketTrades = state.marketTrades;
 			const sortBy = state.sortBy === "Quantity" 
 				? sortQuantity 
@@ -46,9 +47,11 @@ export const useMarketStore = defineStore('market', {
 			for(let n = 0; n < marketTrades.length; n++) {
 				const trade = marketTrades[n];
 
-				if(trade.resource.id === tradeFilter.id) {
-					filteredTrades.push(trade);
-				}
+				if(tradeFilterId !== -1) {
+					if(trade.resource.id === tradeFilterId) {
+						filteredTrades.push(trade);
+					}
+				} else { filteredTrades.push(trade) }
 			}
 
 			const sortedTrades = sortBy !== undefined
@@ -63,6 +66,9 @@ export const useMarketStore = defineStore('market', {
 			const trades = state.filteredTrades;
 
 			return trades.slice((currentPage - 1) * perPage, currentPage * perPage);
+		},
+		getFilterById: state => {
+			return state.filterById;
 		}
 	},
 	actions: {
@@ -126,8 +132,8 @@ export const useMarketStore = defineStore('market', {
 		setPagePagination(n_page) {
 			this.paginationPage = n_page;
 		},
-		setTradeFilter(resource) {
-			this.filterBy = resource;
+		setTradeFilter(id) {
+			this.filterById = id;
 		},
 		setSortMethod(sortName) {
 			this.sortBy = sortName;

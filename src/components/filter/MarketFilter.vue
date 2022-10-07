@@ -1,7 +1,11 @@
 <template>
 	<div class="market-filter">
-		<div v-for="(ressource, key) in resources" :key="key">
-			<button @click="filterByResource(ressource)">{{ ressource.name }}</button>
+		<div 
+			v-for="(resource, key) in resources"
+			:key="key"
+			:class="resource.id === active ? 'active' : ''"
+		>
+			<button @click="filterByResource(resource)">{{ resource.name }}</button>
 		</div>
 	</div>
 </template>
@@ -9,23 +13,33 @@
 <script>
 import { useResourceStore } from "@/stores/resource.store";
 import { useMarketStore } from '@/stores/market.store';
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, ref } from "vue";
 
 export default defineComponent({
 	setup() {
 		const resourceStore = useResourceStore();
 		const marketStore = useMarketStore();
 		resourceStore.getAllResources();
+		const active = ref(-1);
 
 		const resources = computed(() => resourceStore.resources);
+		const tradeFilterId = computed(() => marketStore.filterById);
 
 		const filterByResource = (resource) => {
-			marketStore.setTradeFilter(resource);
+			if(tradeFilterId.value === resource.id) {
+				marketStore.setTradeFilter(-1);
+				active.value = -1;
+			}
+			else {
+				marketStore.setTradeFilter(resource.id);
+				active.value = resource.id;
+			}
 		}
 
 		return {
 			filterByResource,
 			resources,
+			active,
 		}
 	}
 })
@@ -58,6 +72,15 @@ export default defineComponent({
 		justify-content: center;
 		background-color: #fcbb6b;
 		border-radius: 8px;
+
+		&.active {
+			background-color: #fc6b6b;
+
+
+			&:hover {
+				background-color: #ffa9a9;
+			}
+		}
 
 		&:hover {
 			background-color: #fec47d;
