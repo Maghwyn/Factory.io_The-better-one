@@ -95,7 +95,6 @@ export default defineComponent({
         const test = [
             "Hello", "Welcome", "Whatever"
         ]
-        const factoryCost = computed(() => userStore.nextFactoryPrice.cost)
 
         var resource_type = []
         var resource_prod = []
