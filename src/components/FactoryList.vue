@@ -89,13 +89,13 @@ export default defineComponent({
         //const form = createFactoriesSelector();
         const inventory = computed(() => userStore.inventory)
         const money = computed(() => inventory.value.money)
-        var priceOfFactory = computed(() => Math.pow(8, factories.value.length + 1));
+        const priceOfFactory = computed(() => Math.pow(8, factories.value.length + 1));
         const charged = ref(false)
         const factoryLimit = computed(() => userStore.nextFactoryPrice.factory_limit)
         const test = [
             "Hello", "Welcome", "Whatever"
         ]
-        const factoryCost = computed(() => userStore.nextFactoryPrice.cost)
+        // const factoryCost = computed(() => userStore.nextFactoryPrice.cost)
 
         var resource_type = []
         var resource_prod = []

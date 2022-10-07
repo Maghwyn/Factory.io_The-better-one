@@ -1,10 +1,10 @@
 import { useForm } from 'vee-validate';
-import { object, number } from 'yup';
+import { object, number, string } from 'yup';
 
 export const createOfferValidator = () => {
 	const validations = object().shape({
-		resourceId: number()
-			.required("Resource id is necessary"),
+		resourceId: string()
+			.required("Resource name is necessary"),
 		quantity: number()
 			.required("You need to specify a quantity"),
 		unitPrice: number()
