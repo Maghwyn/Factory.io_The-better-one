@@ -17,6 +17,7 @@ import DashboardMarket from "@/components/dashboard/DashboardMarket.vue";
 import { defineComponent, computed } from "vue";
 import { useMarketStore } from "@/stores/market.store";
 import { useUserStore } from "@/stores/user.store";
+import { useResourceStore } from '@/stores/resource.store';
 
 export default defineComponent({
 
@@ -32,6 +33,8 @@ export default defineComponent({
 		const inventory = computed(() => userStore.inventory);
 		const marketStore = useMarketStore();
 		marketStore.getAllTrades();
+		const resourceStore = useResourceStore();
+		resourceStore.getAllResources()
 
 		return {
 			user,
