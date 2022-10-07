@@ -15,6 +15,7 @@ const userStoreDefaultState = () => {
 		inventory: {},
 		nextFactoryPrice : "",
 		isFetching: false,
+		isFetchingOne: 0
 	}
 }
 
@@ -33,7 +34,8 @@ export const useUserStore = defineStore('user', {
 				const userInventory = res.data;
 				if(!userInventory) return;
 				this.inventory = userInventory;
-        this.isFetching = false;
+				this.isFetching = false;
+				this.isFetchingOne = 1
 			} catch(e) {
 				// console.log(e);
 			}
