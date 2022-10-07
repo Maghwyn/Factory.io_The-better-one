@@ -82,7 +82,7 @@ export const useGameStore = defineStore('game', {
 
 			if(factoryIndex === - 1) return;
 			this.factories[factoryIndex] = factory;
-			this.actualFactory[0] = factory
+			this.actualFactory = factory
 			// Perhaps update the user factory at the same time, or dynamically.
 			const userStore = useUserStore();
 			const userFactories = userStore.user.factories;

@@ -71,7 +71,7 @@ export default defineComponent({
 
         const levelUp = () => {
             gameStore.factoryLevelUp(factory.value.id)
-
+            userStore.getMyInventory()
             show.value = false
         }
         const levelUpModal = () => {
