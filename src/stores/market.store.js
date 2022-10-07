@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
+// import { toRaw } from 'vue';
 
 import { 
 	createOneTrade,
@@ -9,6 +10,8 @@ import {
 	deleteOneTrade,
 	buyOneTrade,
 } from '@/API/trade.req';
+import { useUserStore } from './user.store';
+import { computed } from 'vue';
 
 const sortQuantity = (a, b) => {
 	return a.quantity - b.quantity;
@@ -34,7 +37,6 @@ export const useMarketStore = defineStore('market', {
 	getters: {
 		filteredTrades: state => {
 			const tradeFilterId = state.filterById;
-			console.log("STORE ::", tradeFilterId)
 			const marketTrades = state.marketTrades;
 			const sortBy = state.sortBy === "Quantity" 
 				? sortQuantity 
@@ -69,7 +71,23 @@ export const useMarketStore = defineStore('market', {
 		},
 		getFilterById: state => {
 			return state.filterById;
-		}
+		},
+		getCalculatedUserTrades: state => {
+			const userStore = useUserStore();
+			const userId = computed(() => userStore.user.id);
+			const marketTrades = state.marketTrades;
+			const myTrades = [];
+
+			for(let n = 0; n < marketTrades.length; n++) {
+				const trade = marketTrades[n];
+				
+				if(trade.owner.id === userId.value) {
+					myTrades.push(trade);
+				}
+			}
+
+			return myTrades;
+		},
 	},
 	actions: {
 		async createTrade(resourceId, quantity, unitPrice) {
@@ -86,9 +104,11 @@ export const useMarketStore = defineStore('market', {
 			if(res?.response !== undefined) return;
 
 			const userTrades = res.data || [];
+			console.log("USER TRADES", userTrades)
 			if(userTrades.length < 1) return;
 			
 			this.userTrades = userTrades;
+			console.log("USER TRADES", this.userTrades)
 		},
 		async getSingleTrade(tradeId) {
 			const res = await getOneTrade(tradeId);

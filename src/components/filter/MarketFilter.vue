@@ -22,7 +22,8 @@ export default defineComponent({
 		const tradeFilterId = computed(() => marketStore.filterById);
 
 		const filterByResource = (resource) => {
-			if (tradeFilterId.value === resource.id) {
+			marketStore.setPagePagination(1);
+			if(tradeFilterId.value === resource.id) {
 				marketStore.setTradeFilter(-1);
 				active.value = -1;
 			}

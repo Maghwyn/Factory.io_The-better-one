@@ -62,7 +62,7 @@
 import MarketCell from '@/components/dashboard/cells/MarketCell.vue';
 import OverlayComp from '@/components/utils/OverlayComp.vue';
 import MarketNewTrade from '../forms/MarketNewTrade.vue';
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import FilterPagination from '../FilterPagination.vue';
 import { useMarketStore } from '@/stores/market.store';
 import DropdownFilter from '../filter/DropdownFilter.vue';
@@ -79,98 +79,10 @@ export default {
 	setup() {
 		//! Uncomment if trades available.
 		const marketStore = useMarketStore();
-
-		// const per_page = ref(8);
-		// const sort = computed(() => marketStore.sortBy);
 		const page = computed(() => marketStore.paginationPage);
 		const maxPage = computed(() => Math.ceil(marketStore.filteredTrades.length / 8) || 0);
 		const offers = computed(() => marketStore.paginationTrades);
 		const sortOptions = ["None", "Quantity", "Unit Price"];
-		//! List
-
-		// const max = computed(() => /* offers.length */ 1 );
-
-		// const offers = computed(() => [
-		// 	{
-		// 		quantity: 10,
-		// 		unitPrice: 100,
-		// 		resource: {
-		// 			name:"Bois",
-		// 		},
-		// 		owner: {
-		// 			username:"Bill",
-		// 		}
-		// 	}, 
-		// 	{
-		// 		quantity: 2,
-		// 		unitPrice: 9999,
-		// 		resource: {
-		// 			name:"Fer",
-		// 		},
-		// 		owner: {
-		// 			username:"Bob",
-		// 		}
-		// 	},
-		// 	{
-		// 		quantity: 1,
-		// 		unitPrice: 1,
-		// 		resource: {
-		// 			name:"Plastic",
-		// 		},
-		// 		owner: {
-		// 			username:"Sam",
-		// 		}
-		// 	},
-		// 	{
-		// 		quantity: 1,
-		// 		unitPrice: 1,
-		// 		resource: {
-		// 			name:"Plastic",
-		// 		},
-		// 		owner: {
-		// 			username:"Sam",
-		// 		}
-		// 	},
-		// 	{
-		// 		quantity: 1,
-		// 		unitPrice: 1,
-		// 		resource: {
-		// 			name:"Plastic",
-		// 		},
-		// 		owner: {
-		// 			username:"Sam",
-		// 		}
-		// 	},
-		// 	{
-		// 		quantity: 1,
-		// 		unitPrice: 1,
-		// 		resource: {
-		// 			name:"Plastic",
-		// 		},
-		// 		owner: {
-		// 			username:"Sam",
-		// 		}
-		// 	},			{
-		// 		quantity: 1,
-		// 		unitPrice: 1,
-		// 		resource: {
-		// 			name:"Plastic",
-		// 		},
-		// 		owner: {
-		// 			username:"Sam",
-		// 		}
-		// 	},
-		// 	{
-		// 		quantity: 1,
-		// 		unitPrice: 1,
-		// 		resource: {
-		// 			name:"Plastic",
-		// 		},
-		// 		owner: {
-		// 			username:"Sam",
-		// 		}
-		// 	},
-		// ])
 
 		const active = ref(false);
 
@@ -181,16 +93,6 @@ export default {
 		const placeAnOffer = () => {
 			active.value = true;
 		}
-
-		watch(active, val => {
-			if (!val) {
-				// Swal.fire({
-				// 	icon: 'success',
-				// 	title: 'Success',
-				// 	text: 'Test efzfzefzef',
-				// })
-			}
-		})
 
 		return {
 			updateSortBy,

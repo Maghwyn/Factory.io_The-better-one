@@ -2,19 +2,10 @@
 	<div class="create-trade">
 		<form @submit.prevent="createTrade">
 			<div class="create-trade-fields">
-				<!-- <InputComp 
-					:mode="mode"
-					id="resourceId"
-					fill="single"
-					type="text"
-					label="Resource id"
-					placeholder="Specify the resource id"
-					:showFieldError="true"
-				></InputComp> -->
 
-				<DropdownFilter id="resourceId" row="single" mode="single" :options="empty"
+				<DropdownFilter id="resourceId" row="single" mode="single" :options="resName"
 					:placeholder="`Resources`" verbose="no-verbose" tag_color="blue" caret_size="22px" :caret_up="false"
-					dropdown_gap="medium" @select="updateSortBy" class="max-width" :style="'width: 100% !important'"/>
+					dropdown_gap="medium" class="max-width" :style="'width: 100% !important'"/>
 
 				<InputComp 
 					:mode="mode"
@@ -43,12 +34,13 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { createOfferValidator } from "@/scripts/helpers/formValidator.js";
 import { useMarketStore } from "@/stores/market.store";
 import InputComp from "../utils/InputComp.vue";
 import Swal from "sweetalert2";
 import DropdownFilter from "../filter/DropdownFilter.vue";
+import { useResourceStore } from "@/stores/resource.store";
 
 export default defineComponent({
 	emits: ["update:active"],
@@ -58,19 +50,22 @@ export default defineComponent({
 	},
 	setup(_props, { emit }) {
 		const marketStore = useMarketStore();
+		const resourceStore = useResourceStore();
 		const form = createOfferValidator();
 		const mode = ref('passive');
 
-		// const resources = computed(() => )
-		const empty = [];
+		const resources = computed(() => resourceStore.displayUserRss.found);
+		const resName = computed(() => resources.value.map((res) => res.name));
 
 		const createTrade = async () => {
 			const res = await form.validate();
 			if(!res.valid) return mode.value = 'aggresive';
 			const dto = form.values;
 
+			const resource = resources.value.find(res => res.name === dto.resourceId);
+
 			try {
-				await marketStore.createTrade(dto.resourceId, dto.quantity, dto.unitPrice);
+				await marketStore.createTrade(resource.id, dto.quantity, dto.unitPrice);
 			} catch(e) {
 				console.log(e);
 				Swal.fire({
@@ -85,7 +80,7 @@ export default defineComponent({
 			createTrade,
 			disabled: !form.meta.value.valid,
 			mode,
-			empty,
+			resName,
 		}
 	}
 })
