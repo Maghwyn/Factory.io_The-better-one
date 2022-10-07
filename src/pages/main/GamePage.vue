@@ -51,7 +51,7 @@ export default defineComponent({
 
 
 		watch(factory, val => {
-			if (val[0] !== undefined) {
+			if (val !== undefined) {
 				isLvlUp.value = true
 			}
 		}, { deep: true })

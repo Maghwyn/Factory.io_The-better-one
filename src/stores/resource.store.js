@@ -50,7 +50,7 @@ export const useResourceStore = defineStore('resource', {
 			const resources = res.data || [];
 			if(resources.length < 1) return;
 			this.resources = resources;
-			console.log("ressou", this.resources);
+			// console.log("ressou", this.resources);
 		},
 		async getSingleResource(resourceId) {
 			const res = await getOneResource(resourceId);
