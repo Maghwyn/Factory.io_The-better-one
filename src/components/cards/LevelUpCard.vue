@@ -1,7 +1,7 @@
 <template>
     <div class="modal_lvl_up">
         <div class="modal_header">
-            <img class="w-32 object-cover rounded-xl pt-2 ml-2" src="https://images.unsplash.com/photo-1509223197845-458d87318791" alt=""/>
+            <img class="w-32 object-cover rounded-xl pt-2 ml-2" src="@/assets/factory.png" alt=""/>
             <h1>{{nameResource}} Factory</h1>
         </div>
         <div class="prod_div">
@@ -108,6 +108,7 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        background-color: white;
 }
 
 .modal_header{
