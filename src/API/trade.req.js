@@ -2,7 +2,7 @@ import { http } from "./axios.config";
 
 export const createOneTrade = async (resourceId, quantity, unitPrice) => {
 	return await http.post('/trades', { 
-		resource_id: resourceId,
+		resourceId: resourceId,
 		quantity,
 		unitPrice,
 	});
@@ -23,3 +23,17 @@ export const getAllTrades = async () => {
 export const deleteOneTrade = async (tradeId) => {
 	return await http.delete(`/trades/${tradeId}`);
 };
+
+export const buyFactoryLimit = async (tradeId, quantity) => {
+	return await http.post('/users/buy-factory-limit', {
+		id: tradeId,
+		quantity,
+	});
+};
+
+export const buyOneTrade = async (tradeId, quantity) => {
+	return await http.post('/trades/buy', {
+		id: tradeId,
+		quantity,
+	})
+}

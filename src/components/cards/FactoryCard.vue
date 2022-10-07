@@ -2,8 +2,7 @@
   <div
     class=" box w- bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-110 transition-all transform duration-500 ml-10">
     <div>
-      <img class=" w-32 object-cover rounded pt-2" src="https://images.unsplash.com/photo-1509223197845-458d87318791"
-        alt="" />
+      <img class=" w-32 object-cover rounded pt-2" src="@/assets/factory.png" alt="" />
       <p class="text-xl font-bold text-gray-700">{{resource_type}} Factory</p>
       <p class="text-sm text-gray-700">{{resource_type}}: {{resource_generation}}/min</p>
     </div>

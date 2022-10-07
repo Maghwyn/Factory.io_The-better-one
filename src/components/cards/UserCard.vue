@@ -130,7 +130,8 @@ export default defineComponent({
     overflow: hidden;
     gap: 1.5rem;
     background-color: white;
-
+    flex: 1;
+    
     &-separator {
         height: 1px;
         width: 100%;

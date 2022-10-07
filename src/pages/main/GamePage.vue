@@ -12,11 +12,17 @@
 <style>
 .div-game {
 	display: flex;
+	background-color: #353941;
+	width: 100%;
+	height: 100%;
+	padding: 15px;
 }
 
 .user_card {
 	margin-left: 5%;
 	width: 25%;
+	display: flex;
+	flex-direction: column;
 }
 
 .user_card_width {
@@ -45,15 +51,11 @@ export default defineComponent({
 
 
 		watch(factory, val => {
-			console.log(val[0])
 			if (val[0] !== undefined) {
 				isLvlUp.value = true
-				console.log(isLvlUp.value);
 			}
 		}, { deep: true })
-		const getFactoryModal = (event) => {
-			console.log(event.target.id)
-		}
+
 		return {
 			getFactoryModal,
 			user,
