@@ -97,6 +97,7 @@ export default defineComponent({
 
 <style lang='scss' scoped>
 .overlay {
+	width: 100vh;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
