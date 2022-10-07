@@ -23,13 +23,16 @@
 <script>
 import { defineComponent, computed } from "vue";
 import { useResourceStore } from '@/stores/resource.store'
+import { useUserStore } from "@/stores/user.store";
 
 export default defineComponent({
 	setup() {
+		const userStore = useUserStore();
 		const resourceStore = useResourceStore();
 		resourceStore.getAllResources()
 		const displayRss = computed(() => resourceStore.displayUserRss);
 		const allResources = computed(() => resourceStore.resources)
+		setInterval(userStore.getMyInventory(), 30000);
 
 		return {
 			displayRss,

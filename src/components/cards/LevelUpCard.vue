@@ -71,6 +71,7 @@ export default defineComponent({
 
         const levelUp = () => {
             gameStore.factoryLevelUp(factory.value.id)
+
             show.value = false
         }
         const levelUpModal = () => {
@@ -104,7 +105,7 @@ export default defineComponent({
     border-width: thin;
     border-radius: 15px;
     box-shadow: 0px 0px 5px black;
-    margin-top: 20px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
