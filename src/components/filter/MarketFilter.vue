@@ -44,6 +44,8 @@ export default defineComponent({
 	flex-flow: wrap row;
 	flex: 1 0;
 	background-color: white;
+	overflow-y: scroll;
+	max-height: 423.517px;
 
 	border-radius: 15px;
 	box-shadow: 0px 0px 5px black;

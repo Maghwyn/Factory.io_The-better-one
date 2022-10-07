@@ -10,11 +10,22 @@ import {
 	buyOneTrade,
 } from '@/API/trade.req';
 
+const sortQuantity = (a, b) => {
+	return a.quantity - b.quantity;
+}
+
+const sortUnit = (a, b) => {
+	return a.unitPrice - b.unitPrice;
+}
+
 const marketStoreDefaultState = () => {
 	return {
 		marketTrades: [],
 		userTrades: [],
 		filterBy: {},
+		paginationPage: 1,
+		paginationPerPage: 8,
+		sortBy: '',
 	}
 }
 
@@ -24,6 +35,12 @@ export const useMarketStore = defineStore('market', {
 		filteredTrades: state => {
 			const tradeFilter = state.filterBy;
 			const marketTrades = state.marketTrades;
+			const sortBy = state.sortBy === "Quantity" 
+				? sortQuantity 
+				: state.sortBy === "Unit Price" 
+					? sortUnit
+					: undefined;
+
 			const filteredTrades = [];
 
 			for(let n = 0; n < marketTrades.length; n++) {
@@ -33,8 +50,19 @@ export const useMarketStore = defineStore('market', {
 					filteredTrades.push(trade);
 				}
 			}
+
+			const sortedTrades = sortBy !== undefined
+				? filteredTrades.sort((a, b) => sortBy(a, b))
+				: filteredTrades;
 			
-			return filteredTrades;
+			return sortedTrades;
+		},
+		paginationTrades: state => {
+			const perPage = state.paginationPerPage;
+			const currentPage = state.paginationPage;
+			const trades = state.filteredTrades;
+
+			return trades.slice((currentPage - 1) * perPage, currentPage * perPage);
 		}
 	},
 	actions: {
@@ -95,8 +123,14 @@ export const useMarketStore = defineStore('market', {
 
 			console.log(res);
 		},
+		setPagePagination(n_page) {
+			this.paginationPage = n_page;
+		},
 		setTradeFilter(resource) {
 			this.filterBy = resource;
+		},
+		setSortMethod(sortName) {
+			this.sortBy = sortName;
 		},
 		reset(keys) {
 			Object.assign(this, keys?.length
