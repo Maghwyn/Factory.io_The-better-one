@@ -1,9 +1,15 @@
 <template>
 	<div class="user-resource">
-		<div v-if="rss.value != null">
-			<div class="user-resource-cell" v-for="(resources, key) in rss" :key="key">
-				<span>{{ resources }}</span>
-				<span>{{ resources }}</span>
+		<div v-if="allResources.length > 0">
+			<div class="user-resource-cell">
+				<div v-for="(resources, key) in displayRss.found" :key="key" class="box_rss">
+					<span>{{ resources.name }}</span>
+					<span>{{ resources.quantity }}</span>
+				</div>
+				<div v-for="(resources, key) in displayRss.unfound" :key="key" class="box_rss">
+					<span>{{ resources.name }}</span>
+					<span>{{ resources.quantity }}</span>
+				</div>
 			</div>
 		</div>
 		<div v-else>
@@ -15,32 +21,44 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useResourceStore } from '@/stores/resource.store'
 
 export default defineComponent({
-	props: {
-		rss: {
-			type: Array,
-			required: false,
-			default: () => [],
+	setup() {
+		const resourceStore = useResourceStore();
+		resourceStore.getAllResources()
+		const displayRss = computed(() => resourceStore.displayUserRss);
+		const allResources = computed(() => resourceStore.resources)
+
+		return {
+			displayRss,
+			allResources
 		}
-	},
+	}
 
 })
 </script>
 
 <style lang="scss">
+.box_rss {
+	display: flex;
+	justify-content: space-between;
+}
+
 .user-resource {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 	padding-bottom: 10px;
+	max-height: 15vh;
+	overflow-y: scroll;
 
 	&-cell {
 		display: flex;
 		justify-content: space-between;
-		gap: 2rem;
+		flex-direction: column;
 
 		span {
 			font-size: 13px;

@@ -1,9 +1,6 @@
 <template>
 	<div class="market-filter">
-		<div 
-			v-for="(ressource, key) in resources"
-			:key="key"
-		>
+		<div v-for="(ressource, key) in resources" :key="key">
 			<button @click="filterByResource(ressource)">{{ ressource.name }}</button>
 		</div>
 	</div>

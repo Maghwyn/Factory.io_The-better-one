@@ -1,7 +1,7 @@
 <template>
 	<div class="market">
 		<div class="market-settings">
-			<UserCard :user="user" :rss="rss" />
+			<UserCard :user="user" :inventory="inventory" />
 			<MarketFilter></MarketFilter>
 		</div>
 		<div class="market-dashboard">
@@ -29,14 +29,13 @@ export default defineComponent({
 		const userStore = useUserStore();
 		userStore.getMyInventory();
 		const user = computed(() => userStore.user);
-		const rss = computed(() => userStore.inventory.resources);
-
+		const inventory = computed(() => userStore.inventory);
 		const marketStore = useMarketStore();
 		marketStore.getAllTrades();
 
 		return {
 			user,
-			rss
+			inventory
 		}
 	}
 })

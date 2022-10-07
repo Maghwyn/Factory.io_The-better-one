@@ -1,8 +1,8 @@
 <template>
 	<div class="div-game">
 		<FactoryList></FactoryList>
-		<div class="user_card_div">
-			<UserCard class="user_card_width" :user="user" :rss="rss" />
+		<div class="user_card">
+			<UserCard class="user_card_width" :user="user" />
 			<LevelUpCard v-if="isLvlUp" />
 		</div>
 
@@ -18,12 +18,11 @@
 	padding: 15px;
 }
 
-
-.user_card_div {
+.user_card {
 	margin-left: 5%;
 	width: 25%;
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .user_card_width {
@@ -48,8 +47,8 @@ export default defineComponent({
 		const userStore = useUserStore();
 		userStore.getMyInventory();
 		const user = computed(() => userStore.user);
-		const rss = computed(() => userStore.inventory.resources);
 		const isLvlUp = ref(false);
+
 
 		watch(factory, val => {
 			if (val[0] !== undefined) {
@@ -58,10 +57,12 @@ export default defineComponent({
 		}, { deep: true })
 
 		return {
+			getFactoryModal,
 			user,
-			rss,
-			isLvlUp
+			isLvlUp,
+
 		}
+
 	},
 	components: {
 		UserCard,

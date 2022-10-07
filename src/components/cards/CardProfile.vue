@@ -11,22 +11,35 @@
 				</span>
 			</div>
 			<div>
-				<span class="coin">Income : {{ user?.income }}</span>
-				<span class="factory">Factories : {{ user?.factories?.length }}</span>
+				<span class="coin">Income : {{ user.income }}</span>
+				<span class="coin">Money : {{ inventory.money }}</span>
+				<span class="factory">Factories : {{ user.factories.length }}</span>
+				<span class="factory">Factory limit : {{ priceFactoryLimit.factory_limit }}</span>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, computed, watch } from "vue";
+import { useUserStore } from "@/stores/user.store";
 
 export default defineComponent({
-	props: {
-		user: {
-			type: Object,
-			required: false,
-			default: () => { },
+	setup() {
+		const userStore = useUserStore();
+		const inventory = computed(() => userStore.inventory);
+		const user = computed(() => userStore.user);
+		const priceFactoryLimit = computed(() => userStore.nextFactoryPrice);
+		console.log(priceFactoryLimit)
+
+		watch(priceFactoryLimit, val => {
+			console.log(val)
+		})
+
+		return {
+			priceFactoryLimit,
+			inventory,
+			user,
 		}
 	}
 })
@@ -35,7 +48,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .user-profile {
 	width: 100%;
-	height: 100px;
+	height: 110px;
 	display: flex;
 	gap: 2rem;
 

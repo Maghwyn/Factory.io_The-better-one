@@ -5,13 +5,13 @@
 				<h2 class="text-3xl font-semibold leading-tight">Trading market</h2>
 				<div class="market-dashboard-filter">
 					<div class="market-dashboard-addoffer">
-					<button @click="placeAnOffer" class="container flex justify-end">Create an offer</button>
+						<button @click="placeAnOffer" class="container flex justify-end">Create an offer</button>
 					</div>
 					<div class="market-dashboard-select">
 						<span>Sort options :</span>
 						<DropdownFilter id="sort" row="single" mode="single" :selected="1" :options="sortOptions"
-							:placeholder="`Sort method`" verbose="no-verbose" tag_color="blue" caret_size="22px" :caret_up="false"
-							dropdown_gap="medium" @select="updateSortBy" class="max-width"/>
+							:placeholder="`Sort method`" verbose="no-verbose" tag_color="blue" caret_size="22px"
+							:caret_up="false" dropdown_gap="medium" @select="updateSortBy" class="max-width" />
 					</div>
 				</div>
 			</div>
@@ -49,19 +49,11 @@
 				</div>
 			</div>
 		</div>
-		<FilterPagination
-			v-model:page="page" :max="maxPage"
-		>
+		<FilterPagination v-model:page="page" :max="maxPage">
 		</FilterPagination>
 
-		<OverlayComp
-			v-model:active="active"
-			:fullSize="false"
-			crossColor="#165ed2"
-		>
-			<MarketNewTrade
-				v-model:active="active"
-			></MarketNewTrade>
+		<OverlayComp v-model:active="active" :fullSize="false" crossColor="#165ed2">
+			<MarketNewTrade v-model:active="active"></MarketNewTrade>
 		</OverlayComp>
 	</div>
 </template>
@@ -179,7 +171,7 @@ export default {
 		// 		}
 		// 	},
 		// ])
- 
+
 		const active = ref(false);
 
 		const updateSortBy = (sortName) => {
@@ -191,7 +183,7 @@ export default {
 		}
 
 		watch(active, val => {
-			if(!val) {
+			if (!val) {
 				// Swal.fire({
 				// 	icon: 'success',
 				// 	title: 'Success',
