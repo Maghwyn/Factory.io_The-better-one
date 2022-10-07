@@ -1,5 +1,5 @@
 <template>
-    <div class="box-factory-card shadow-xl">
+    <div class="box-factory-card">
         <div class="w-full flex justify-between filterDiv">
 
             <!-- <DropdownFilter></DropdownFilter> -->
@@ -17,7 +17,7 @@
 
         <div v-if="factories.length > 0" class="flex w-full flex-wrap justify-around">
             <FactoryCard v-for="(item, index) in factories" :key="index" :level="item.level" @click="getModal($event)"
-                :resource_prod="item.model.generate_per_minute" :resource_type="item.model.resource.name">
+                :id="item.id" :resource_prod="item.model.generate_per_minute" :resource_type="item.model.resource.name">
             </FactoryCard>
         </div>
 
@@ -95,7 +95,6 @@ export default defineComponent({
         const test = [
             "Hello", "Welcome", "Whatever"
         ]
-        // const factoryCost = computed(() => userStore.nextFactoryPrice.cost)
 
         var resource_type = []
         var resource_prod = []
@@ -156,7 +155,15 @@ export default defineComponent({
         }
 
         const getModal = (event) => {
-            const factoryId = event.target.id
+            var factoryId = ""
+            if (event.target.id == '') {
+                factoryId = event.target.parentNode.id
+                if (event.target.parentNode.id == '') {
+                    factoryId = event.target.parentNode.parentNode.id
+                }
+            } else {
+                factoryId = event.target.id
+            }
             gameStore.getFactoryModal(factoryId)
         }
 
@@ -259,7 +266,6 @@ export default defineComponent({
 }
 
 .box-factory-card {
-    width: 60%;
     border-style: solid;
     border-color: rgb(94, 94, 94);
     background-color: white;
@@ -267,8 +273,7 @@ export default defineComponent({
     border-width: thin;
     border-radius: 15px;
     justify-content: center;
-    margin-left: 5%;
-    min-height: 80vh;
+    min-height: 100%;
 }
 
 .filterDiv {

@@ -1,21 +1,46 @@
 <template>
 	<div class="div-game">
-		<FactoryList></FactoryList>
-		<div class="user_card">
+		<div class="div-game-settings">
 			<UserCard class="user_card_width" :user="user" />
 			<LevelUpCard v-if="isLvlUp" />
 		</div>
-
+		<div class="div-game-dashboard">
+			<FactoryList></FactoryList>
+		</div>
 	</div>
 </template>
 
-<style>
+<style lang="scss">
 .div-game {
-	display: flex;
-	background-color: #353941;
 	width: 100%;
 	height: 100%;
 	padding: 15px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex-flow: row-reverse;
+	gap: 1rem;
+	background-color: #353941;
+
+	&-settings {
+		max-width: 330px;
+		min-width: 330px;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		gap: 1rem;
+	}
+
+	&-dashboard {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		flex: 1 0;
+		border-radius: 15px;
+		gap: 1rem;
+
+	}
 }
 
 .user_card {
@@ -51,7 +76,7 @@ export default defineComponent({
 
 
 		watch(factory, val => {
-			if (val[0] !== undefined) {
+			if (val !== undefined) {
 				isLvlUp.value = true
 			}
 		}, { deep: true })
