@@ -1,0 +1,718 @@
+<template>
+    <!-- component -->
+    <div
+        class="bg-red-900 absolute top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-red-800 bottom-0 leading-5 h-full w-full overflow-hidden">
+    </div>
+    <div class="relative   min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl">
+        <div class="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-md  z-10">
+            <div class="self-start hidden lg:flex flex-col  text-gray-300">
+
+                <h1 class="my-3 font-semibold text-4xl"> {{ $t("signup.welcome") }}</h1>
+                <p class="pr-3 text-sm opacity-75">{{ $t("signup.welcome_message") }}
+                </p>
+            </div>
+        </div>
+        <div class="flex justify-center self-center  z-10">
+            <div class="p-12 bg-white mx-auto rounded-3xl w-96 ">
+                <div class="mb-7">
+                    <h3 class="font-semibold text-2xl text-gray-800">{{$t("signup.signup")}} </h3>
+                    <p class="text-gray-400">{{$t("signup.account_existing")}}
+                        <router-link to="/login" class="text-sm text-purple-700 hover:text-purple-700">
+                            {{$t("signup.signin")}}
+                        </router-link>
+                    </p>
+                </div>
+                <div class="space-y-6">
+                    <div class="">
+                        <input
+                            class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
+                            type="" :placeholder='$t("signup.user")' v-model="mail">
+                    </div>
+
+
+                    <div class="relative" x-data="{ show: False }">
+                        <input :placeholder='$t("signup.password")' type='password' v-model="password"
+                            class="text-sm  px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400">
+                    </div>
+                    <div>
+                        <button type="submit" @click="signUp"
+                            class="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500">
+                            {{$t("signup.signup")}}
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <svg class="absolute bottom-0 left-0 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#fff" fill-opacity="1"
+            d="M0,0L40,42.7C80,85,160,171,240,197.3C320,224,400,192,480,154.7C560,117,640,75,720,74.7C800,75,880,117,960,154.7C1040,192,1120,224,1200,213.3C1280,203,1360,149,1400,122.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
+        </path>
+    </svg>
+</template>
+
+<script>
+import { useAuthStore } from '@/stores/auth.store'
+import { ref, defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default defineComponent({
+    setup() {
+        const authStore = useAuthStore();
+        const router = useRouter();
+        const mail = ref("");
+        const password = ref("");
+
+        const signUp = () => {
+            authStore.signup(mail.value, password.value);
+            console.log("signed");
+            router.push('/login');
+        }
+
+        return {
+            signUp,
+            mail,
+            password,
+        }
+    }
+})
+
+</script>
+
+
+
+<style>
+.st0 {
+    fill: #fff
+}
+
+.st1 {
+    fill: #f5bb41
+}
+
+.st2 {
+    fill: #2167d1
+}
+
+.st3 {
+    fill: #3d84f3
+}
+
+.st4 {
+    fill: #4ca853
+}
+
+.st5 {
+    fill: #398039
+}
+
+.st6 {
+    fill: #d74f3f
+}
+
+.st7 {
+    fill: #d43c89
+}
+
+.st8 {
+    fill: #b2005f
+}
+
+.st9 {
+    stroke: #000
+}
+
+.st10,
+.st11,
+.st9 {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10
+}
+
+.st10 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke: #000
+}
+
+.st11 {
+    stroke: #040404
+}
+
+.st11,
+.st12,
+.st13 {
+    fill-rule: evenodd;
+    clip-rule: evenodd
+}
+
+.st13 {
+    fill: #040404
+}
+
+.st14 {
+    fill: url(#SVGID_1_)
+}
+
+.st15 {
+    fill: url(#SVGID_2_)
+}
+
+.st16 {
+    fill: url(#SVGID_3_)
+}
+
+.st17 {
+    fill: url(#SVGID_4_)
+}
+
+.st18 {
+    fill: url(#SVGID_5_)
+}
+
+.st19 {
+    fill: url(#SVGID_6_)
+}
+
+.st20 {
+    fill: url(#SVGID_7_)
+}
+
+.st21 {
+    fill: url(#SVGID_8_)
+}
+
+.st22 {
+    fill: url(#SVGID_9_)
+}
+
+.st23 {
+    fill: url(#SVGID_10_)
+}
+
+.st24 {
+    fill: url(#SVGID_11_)
+}
+
+.st25 {
+    fill: url(#SVGID_12_)
+}
+
+.st26 {
+    fill: url(#SVGID_13_)
+}
+
+.st27 {
+    fill: url(#SVGID_14_)
+}
+
+.st28 {
+    fill: url(#SVGID_15_)
+}
+
+.st29 {
+    fill: url(#SVGID_16_)
+}
+
+.st30 {
+    fill: url(#SVGID_17_)
+}
+
+.st31 {
+    fill: url(#SVGID_18_)
+}
+
+.st32 {
+    fill: url(#SVGID_19_)
+}
+
+.st33 {
+    fill: url(#SVGID_20_)
+}
+
+.st34 {
+    fill: url(#SVGID_21_)
+}
+
+.st35 {
+    fill: url(#SVGID_22_)
+}
+
+.st36 {
+    fill: url(#SVGID_23_)
+}
+
+.st37 {
+    fill: url(#SVGID_24_)
+}
+
+.st38 {
+    fill: url(#SVGID_25_)
+}
+
+.st39 {
+    fill: url(#SVGID_26_)
+}
+
+.st40 {
+    fill: url(#SVGID_27_)
+}
+
+.st41 {
+    fill: url(#SVGID_28_)
+}
+
+.st42 {
+    fill: url(#SVGID_29_)
+}
+
+.st43 {
+    fill: url(#SVGID_30_)
+}
+
+.st44 {
+    fill: url(#SVGID_31_)
+}
+
+.st45 {
+    fill: url(#SVGID_32_)
+}
+
+.st46 {
+    fill: url(#SVGID_33_)
+}
+
+.st47 {
+    fill: url(#SVGID_34_)
+}
+
+.st48 {
+    fill: url(#SVGID_35_)
+}
+
+.st49 {
+    fill: url(#SVGID_36_)
+}
+
+.st50 {
+    fill: url(#SVGID_37_)
+}
+
+.st51 {
+    fill: url(#SVGID_38_)
+}
+
+.st52 {
+    fill: url(#SVGID_39_)
+}
+
+.st53 {
+    fill: url(#SVGID_40_)
+}
+
+.st54 {
+    fill: url(#SVGID_41_)
+}
+
+.st55 {
+    fill: url(#SVGID_42_)
+}
+
+.st56 {
+    fill: url(#SVGID_43_)
+}
+
+.st57 {
+    fill: url(#SVGID_44_)
+}
+
+.st58 {
+    fill: url(#SVGID_45_)
+}
+
+.st59 {
+    fill: #040404
+}
+
+.st60 {
+    fill: url(#SVGID_46_)
+}
+
+.st61 {
+    fill: url(#SVGID_47_)
+}
+
+.st62 {
+    fill: url(#SVGID_48_)
+}
+
+.st63 {
+    fill: url(#SVGID_49_)
+}
+
+.st64 {
+    fill: url(#SVGID_50_)
+}
+
+.st65 {
+    fill: url(#SVGID_51_)
+}
+
+.st66 {
+    fill: url(#SVGID_52_)
+}
+
+.st67 {
+    fill: url(#SVGID_53_)
+}
+
+.st68 {
+    fill: url(#SVGID_54_)
+}
+
+.st69 {
+    fill: url(#SVGID_55_)
+}
+
+.st70 {
+    fill: url(#SVGID_56_)
+}
+
+.st71 {
+    fill: url(#SVGID_57_)
+}
+
+.st72 {
+    fill: url(#SVGID_58_)
+}
+
+.st73 {
+    fill: url(#SVGID_59_)
+}
+
+.st74 {
+    fill: url(#SVGID_60_)
+}
+
+.st75 {
+    fill: url(#SVGID_61_)
+}
+
+.st76 {
+    fill: url(#SVGID_62_)
+}
+
+.st77,
+.st78 {
+    fill: none;
+    stroke-miterlimit: 10
+}
+
+.st77 {
+    stroke: #000;
+    stroke-width: 3
+}
+
+.st78 {
+    stroke: #fff
+}
+
+.st79 {
+    fill: #4bc9ff
+}
+
+.st80 {
+    fill: #50d
+}
+
+.st81 {
+    fill: #ff3a00
+}
+
+.st82 {
+    fill: #e6162d
+}
+
+.st84 {
+    fill: #f93
+}
+
+.st85 {
+    fill: #b92b27
+}
+
+.st86 {
+    fill: #00aced
+}
+
+.st87 {
+    fill: #bd2125
+}
+
+.st89 {
+    fill: #6665d2
+}
+
+.st90 {
+    fill: #ce3056
+}
+
+.st91 {
+    fill: #5bb381
+}
+
+.st92 {
+    fill: #61c3ec
+}
+
+.st93 {
+    fill: #e4b34b
+}
+
+.st94 {
+    fill: #181ef2
+}
+
+.st95 {
+    fill: red
+}
+
+.st96 {
+    fill: #fe466c
+}
+
+.st97 {
+    fill: #fa4778
+}
+
+.st98 {
+    fill: #f70
+}
+
+.st99 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #1f6bf6
+}
+
+.st100 {
+    fill: #520094
+}
+
+.st101 {
+    fill: #4477e8
+}
+
+.st102 {
+    fill: #3d1d1c
+}
+
+.st103 {
+    fill: #ffe812
+}
+
+.st104 {
+    fill: #344356
+}
+
+.st105 {
+    fill: #00cc76
+}
+
+.st106 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #345e90
+}
+
+.st107 {
+    fill: #1f65d8
+}
+
+.st108 {
+    fill: #eb3587
+}
+
+.st109 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #603a88
+}
+
+.st110 {
+    fill: #e3ce99
+}
+
+.st111 {
+    fill: #783af9
+}
+
+.st112 {
+    fill: #ff515e
+}
+
+.st113 {
+    fill: #ff4906
+}
+
+.st114 {
+    fill: #503227
+}
+
+.st115 {
+    fill: #4c7bd9
+}
+
+.st116 {
+    fill: #69c9d0
+}
+
+.st117 {
+    fill: #1b92d1
+}
+
+.st118 {
+    fill: #eb4f4a
+}
+
+.st119 {
+    fill: #513728
+}
+
+.st120 {
+    fill: #f60
+}
+
+.st121 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #b61438
+}
+
+.st122 {
+    fill: #fffc00
+}
+
+.st123 {
+    fill: #141414
+}
+
+.st124 {
+    fill: #94d137
+}
+
+.st125,
+.st126 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #f1f1f1
+}
+
+.st126 {
+    fill: #66e066
+}
+
+.st127 {
+    fill: #2d8cff
+}
+
+.st128 {
+    fill: #f1a300
+}
+
+.st129 {
+    fill: #4ba2f2
+}
+
+.st130 {
+    fill: #1a5099
+}
+
+.st131 {
+    fill: #ee6060
+}
+
+.st132 {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #f48120
+}
+
+.st133 {
+    fill: #222
+}
+
+.st134 {
+    fill: url(#SVGID_63_)
+}
+
+.st135 {
+    fill: #0077b5
+}
+
+.st136 {
+    fill: #fc0
+}
+
+.st137 {
+    fill: #eb3352
+}
+
+.st138 {
+    fill: #f9d265
+}
+
+.st139 {
+    fill: #f5b955
+}
+
+.st140 {
+    fill: #dd2a7b
+}
+
+.st141 {
+    fill: #66e066
+}
+
+.st142 {
+    fill: #eb4e00
+}
+
+.st143 {
+    fill: #ffc794
+}
+
+.st144 {
+    fill: #b5332a
+}
+
+.st145 {
+    fill: #4e85eb
+}
+
+.st146 {
+    fill: #58a45c
+}
+
+.st147 {
+    fill: #f2bc42
+}
+
+.st148 {
+    fill: #d85040
+}
+
+.st149 {
+    fill: #464eb8
+}
+
+.st150 {
+    fill: #7b83eb
+}
+</style>

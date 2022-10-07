@@ -1,0 +1,70 @@
+<template>
+	<div class="container mx-auto px-4 sm:px-8">
+		<div class="py-8">
+			<div>
+				<h2 class="text-2xl font-semibold leading-tight">Ressources</h2>
+				<div>
+					<button @click="addRessource" class="container flex justify-end">Ajouter une ressource</button>
+				</div>
+			</div>
+			<div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+				<div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+					<table class="min-w-full leading-normal">
+						<thead>
+							<tr>
+								<th
+									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+									Name
+								</th>
+								<th
+									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+									Base Value
+								</th>
+								<th
+									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+									edit
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<RessourcesCard v-for="(ressources, index) in ressources" :key='index' :ressources="ressources" />
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<OverlayComp v-model:active="active" :fullSize="false">
+			<RessourcesForm v-model:active="active"/>
+		</OverlayComp>
+	</div>
+</template>
+
+<script>
+import { useAdminStore } from '@/stores/admin.store';
+import { computed, ref } from "vue";
+import RessourcesCard from './RessourcesCard.vue';
+import RessourcesForm from './RessourcesForm.vue';
+import OverlayComp from '@/components/utils/OverlayComp.vue';
+
+export default {
+	components: {
+		RessourcesCard,
+		OverlayComp,
+		RessourcesForm
+	},
+	setup() {
+		const adminStore = useAdminStore();
+		const ressources = computed(() => adminStore.allRessources)
+		const active = ref(false)
+
+		const addRessource = () => {
+			active.value = true
+		}
+		return {
+			ressources,
+			addRessource,
+			active
+		}
+	}
+}
+</script>
