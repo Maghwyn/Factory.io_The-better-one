@@ -36,18 +36,25 @@ export default defineComponent({
 		const rss = {}
 
 		watch(allResources, val => {
+			console.log("st");
 			console.log(val)
-			for (let i = 0; i < inventory.value.inventory_resources.length; i++) {
-				for (let y = 0; y < allResources.value.length; y++) {
-					if (allResources.value[y].id == inventory.value.inventory_resources[i].id) {
-						rss[allResources.value[y].name] = inventory.value.inventory_resources[i].quantity
+			console.log(allResources.value)
+			console.log("ed");
+			for (let y = 0; y < val.length; y++) {
+				for (let i = 0; i < inventory.value.inventory_resources.length; i++) {
+					if (val[y].id == inventory.value.inventory_resources[i].resource.id) {
+						rss[val[y].name] = inventory.value.inventory_resources[i].quantity
 					}
 					else {
-						rssShowed.push(allResources.value[y])
+						if (val[y].name in rss) {
+							console.log("")
+						}
+						else if (rssShowed.indexOf(val[y]) === -1) {
+							rssShowed.push(val[y])
+						}
 					}
 				}
 			}
-
 		}, { deep: true })
 
 		return {
@@ -73,6 +80,8 @@ export default defineComponent({
 	flex-direction: column;
 	gap: 1rem;
 	padding-bottom: 10px;
+	max-height: 15vh;
+	overflow-y: scroll;
 
 	&-cell {
 		display: flex;

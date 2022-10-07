@@ -12,7 +12,7 @@
 			</div>
 			<div>
 				<span class="coin">Income : {{ user.income }}</span>
-				<span class="coin">money : {{ inventory.money }}</span>
+				<span class="coin">Money : {{ inventory.money }}</span>
 				<span class="factory">Factories : {{ user.factories.length }}</span>
 				<span class="factory">Factory limit : {{ priceFactoryLimit.factory_limit }}</span>
 			</div>

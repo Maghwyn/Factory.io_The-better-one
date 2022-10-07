@@ -66,10 +66,11 @@ export default defineComponent({
         const userData = computed(() => props.user);
         const priceFactoryLimit = computed(() => userStore.nextFactoryPrice);
         userStore.checkPriceFactoryLimit();
-        setInterval(userStore.getMyInventory, 30000);
+        setInterval(userStore.getMyInventory(), 30000);
 
         const upgradeFactoryLimit = () => {
-            userStore.buyFactoryLimit()
+            userStore.buyFactoryLimit();
+            userStore.getMyInventory();
             userStore.checkPriceFactoryLimit();
             active.value = false
         }

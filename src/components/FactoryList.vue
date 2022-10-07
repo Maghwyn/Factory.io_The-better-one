@@ -32,7 +32,9 @@
         <OverlayComp v-model:active="active" :fullSize="false">
             <div class="bg-slate-800 bg-opacity-50 flex justify-center items-center">
                 <div class="bg-white px-16 py-14 rounded-md text-center">
-                    <h3 class="text-xl mb-4 font-bold text-slate-500">Do you want to buy a factory ? ({{
+                    <h3 class="text-xl mb-4 font-bold text-slate-500" v-if="factories.length == 0">Do you want to buy a
+                        factory ? (40)</h3>
+                    <h3 v-else class="text-xl mb-4 font-bold text-slate-500">Do you want to buy a factory ? ({{
                     priceOfFactory }})</h3>
                     <p> Current money : {{ money }}</p>
                     <div class="btn_div">
@@ -40,7 +42,10 @@
                             <button @click="cancel()" class="btn_child_cancel">Cancel</button>
                         </div>
                         <div class="btn_parent" v-if="charged">
-                            <button v-if="factoryLimit <= factories.length" disabled class="btn_child_disabled">
+                            <button @click="gacha()" v-if="factories.length == 0" class="btn_child">
+                                Pay 40
+                            </button>
+                            <button v-else-if="factoryLimit <= factories.length" disabled class="btn_child_disabled">
                                 Pay {{priceOfFactory}}
                             </button>
                             <button v-else-if="money < priceOfFactory" disabled class="btn_child_disabled">Pay
@@ -75,15 +80,18 @@ export default defineComponent({
         const active = ref(false)
         const userStore = useUserStore();
         const gameStore = useGameStore();
+        gameStore.getFactoriesModels()
+        gameStore.getAllUserFactories();
+        userStore.checkPriceFactoryLimit()
         const models = computed(() => gameStore.models);
         const visible = ref(false)
         const factories = computed(() => gameStore.factories);
         //const form = createFactoriesSelector();
         const inventory = computed(() => userStore.inventory)
         const money = computed(() => inventory.value.money)
-        const priceOfFactory = 40
+        var priceOfFactory = computed(() => Math.pow(8, factories.value.length + 1));
         const charged = ref(false)
-        const factoryLimit = computed(() => inventory.value.factory_limit)
+        const factoryLimit = computed(() => userStore.nextFactoryPrice.factory_limit)
         const test = [
             "Hello", "Welcome", "Whatever"
         ]
@@ -92,9 +100,6 @@ export default defineComponent({
         var level = []
         var id = []
 
-        userStore.checkPriceFactoryLimit()
-        gameStore.getFactoriesModels();
-        gameStore.getAllUserFactories();
 
 
         watch(inventory, val => {
@@ -103,8 +108,8 @@ export default defineComponent({
         }, { deep: true })
 
         const addFactory = () => {
+            console.log(factories.value)
             active.value = true
-            console.log(factories.value[0].model.generate_per_minute)
         }
 
         const market = () => {
@@ -133,6 +138,8 @@ export default defineComponent({
             }
             visible.value = true
         }
+
+
 
         const chooseFactory = (id_choosed) => {
             gameStore.createFactory(id_choosed)
