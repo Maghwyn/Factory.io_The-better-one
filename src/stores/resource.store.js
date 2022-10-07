@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
 import { createOneResource, getAllResources, getOneResource } from '@/API/resource.req';
+import { useUserStore } from './user.store';
+import { computed } from "vue";
 
 const resourceStoreDefaultState = () => {
 	return {
@@ -10,6 +12,28 @@ const resourceStoreDefaultState = () => {
 
 export const useResourceStore = defineStore('resource', {
 	state: () => resourceStoreDefaultState(),
+	getters: {
+		displayUserRss: state => {
+			const userStore = useUserStore();
+			const inventory = computed(() => userStore.inventory);
+			const allResources = state.resources;
+			const unfound = [];
+			const found = [];
+
+			for (let n = 0; n < allResources.length; n++) {
+				const resource = allResources[n];
+				const invRss = inventory.value.inventory_resources;
+				const index = invRss.findIndex((rss) => rss.resource.id === resource.id);
+				if (index === -1) unfound.push({ name: resource.name, quantity: 0 });
+				else found.push({ name: resource.name, quantity: invRss[index].quantity });
+			}
+
+			return {
+				unfound,
+				found,
+			}
+		}
+	},
 	actions: {
 		async createResource(resourceName, imageUrl, baseValue) {
 			const res = await createOneResource(resourceName, imageUrl, baseValue);
