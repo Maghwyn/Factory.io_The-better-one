@@ -1,6 +1,6 @@
 <template>
 	<div class="user-resource">
-		<div v-if="allResources[0] !== undefined">
+		<div v-if="allResources.length > 0">
 			<div class="user-resource-cell">
 				<div v-for="(resources, key) in displayRss.found" :key="key" class="box_rss">
 					<span>{{ resources.name }}</span>
@@ -29,9 +29,11 @@ export default defineComponent({
 		const resourceStore = useResourceStore();
 		resourceStore.getAllResources()
 		const displayRss = computed(() => resourceStore.displayUserRss);
+		const allResources = computed(() => resourceStore.resources)
 
 		return {
 			displayRss,
+			allResources
 		}
 	}
 
