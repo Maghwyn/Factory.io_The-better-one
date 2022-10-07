@@ -16,9 +16,8 @@
 
         <div v-if="factories.length > 0" class="flex w-full flex-wrap justify-around">
             <FactoryCard v-for="(item, index) in factories" :key="index" :level="item.level" @click="getModal($event)"
-                :resource_type="item.model.resource.name" :resource_prod="item.generate_per_minute"></FactoryCard>
-            <!-- This is an example component -->
-
+                :resource_prod="item.model.generate_per_minute" :resource_type="item.model.resource.name">
+            </FactoryCard>
         </div>
 
         <div v-if="visible"
@@ -97,9 +96,6 @@ export default defineComponent({
         gameStore.getFactoriesModels();
         gameStore.getAllUserFactories();
 
-        // watch(form.values, val => {
-        //     console.log(val);
-        // }, { deep: true })
 
         watch(inventory, val => {
             console.log(val);
@@ -108,6 +104,7 @@ export default defineComponent({
 
         const addFactory = () => {
             active.value = true
+            console.log(factories.value[0].model.generate_per_minute)
         }
 
         const market = () => {

@@ -2,7 +2,7 @@
 	<div class="div-game">
 		<FactoryList></FactoryList>
 		<div class="user_card">
-			<UserCard class="user_card_width" :user="user" :inventory="inventory" />
+			<UserCard class="user_card_width" :user="user" />
 			<LevelUpCard v-if="isLvlUp" />
 		</div>
 
@@ -41,9 +41,7 @@ export default defineComponent({
 		const userStore = useUserStore();
 		userStore.getMyInventory();
 		const user = computed(() => userStore.user);
-		const inventory = computed(() => userStore.inventory);
 		const isLvlUp = ref(false);
-		setInterval(userStore.getMyInventory, 30000);
 
 
 		watch(factory, val => {
@@ -59,7 +57,6 @@ export default defineComponent({
 		return {
 			getFactoryModal,
 			user,
-			inventory,
 			isLvlUp,
 
 		}

@@ -5,7 +5,7 @@
       <img class=" w-32 object-cover rounded pt-2" src="https://images.unsplash.com/photo-1509223197845-458d87318791"
         alt="" />
       <p class="text-xl font-bold text-gray-700">{{resource_type}} Factory</p>
-      <p class="text-sm text-gray-700">{{resource_type}}: {{resource_prod}}/min</p>
+      <p class="text-sm text-gray-700">{{resource_type}}: {{resource_generation}}/min</p>
     </div>
     <div class="div_level">
       <span class="level">Lv. {{level}}</span>
@@ -58,32 +58,29 @@ export default defineComponent({
   props: {
     resource_type: {
       type: String,
-      required: false,
-      default: () => "Wood",
+      required: true,
     },
     resource_prod: {
       type: Number,
-      required: false,
-      default: () => 5,
+      required: true,
     },
     level: {
       type: Number,
-      required: false,
-      default: () => 15,
+      required: true,
     },
   },
-  setup() {
+  setup(props) {
     const gameStore = useGameStore();
-
+    const resource_generation = props.level * props.resource_prod
     const factories = ref([]);
 
     const createFactory = async () => {
       gameStore.createFactory(1);
       factories.value = gameStore.factories
-      console.log(factories.value)
     }
     return {
-      createFactory
+      createFactory,
+      resource_generation
     }
   }
 })

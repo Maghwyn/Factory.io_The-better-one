@@ -41,14 +41,8 @@
 				</div>
 			</div>
 		</div>
-		<OverlayComp
-			v-model:active="active"
-			:fullSize="false"
-			crossColor="#165ed2"
-		>
-			<MarketNewTrade
-				v-model:active="active"
-			></MarketNewTrade>
+		<OverlayComp v-model:active="active" :fullSize="false" crossColor="#165ed2">
+			<MarketNewTrade v-model:active="active"></MarketNewTrade>
 		</OverlayComp>
 	</div>
 </template>
@@ -77,30 +71,30 @@ export default {
 				quantity: 10,
 				unitPrice: 100,
 				resource: {
-					name:"Bois",
+					name: "Bois",
 				},
 				owner: {
-					username:"Bill",
+					username: "Bill",
 				}
-			}, 
+			},
 			{
 				quantity: 2,
 				unitPrice: 9999,
 				resource: {
-					name:"Fer",
+					name: "Fer",
 				},
 				owner: {
-					username:"Bob",
+					username: "Bob",
 				}
 			},
 			{
 				quantity: 1,
 				unitPrice: 1,
 				resource: {
-					name:"Plastic",
+					name: "Plastic",
 				},
 				owner: {
-					username:"Sam",
+					username: "Sam",
 				}
 			}
 		])
@@ -112,7 +106,7 @@ export default {
 		}
 
 		watch(active, val => {
-			if(!val) {
+			if (!val) {
 				// Swal.fire({
 				// 	icon: 'success',
 				// 	title: 'Success',

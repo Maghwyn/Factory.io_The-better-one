@@ -48,11 +48,7 @@ export default defineComponent({
 				}
 			}
 
-
 		}, { deep: true })
-
-
-
 
 		return {
 			inventory,
