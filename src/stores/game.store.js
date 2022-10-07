@@ -34,15 +34,12 @@ export const useGameStore = defineStore('game', {
 			// Perhaps update the user factory at the same time, or dynamically.
 		},
 		async getAllUserFactories() {
-			console.log("Yo")
-
 			const res = await getAllFactories();
 			if(res?.response !== undefined) return;
 			const factories = res.data || [];
 			if(factories.length < 1) return;
 
 			this.factories = factories;
-			console.log(this.factories)
 
 		},
 		async getSingleFactory(factoryId) {
@@ -51,7 +48,6 @@ export const useGameStore = defineStore('game', {
 
 			const factory = res.data;
 			if(!factory) return {};
-
 			return factory;
 		},
 		async deleteFactory(factoryId) {
@@ -95,7 +91,6 @@ export const useGameStore = defineStore('game', {
 					element = factory
 				}
 			});
-			console.log(userStore.user);
 		},
 		async getFactoryModal(factoryId){
 			this.actualFactory = await this.getSingleFactory(factoryId)

@@ -61,16 +61,17 @@ export default defineComponent({
         const userStore = useUserStore();
 
         const factory = computed(() => gameStore.actualFactory);
-        const nameResource = computed(() => factory.value[0].model.resource.name);
+        const nameResource = computed(() => factory.value.model.resource.name);
         const userInventory = computed(() => userStore.inventory);
-        const inventoryResources = computed(() => userInventory.value.inventory_resources[0].quantity);
-        const generation = computed(() => factory.value[0].model.generate_per_minute * factory.value[0].level);
-        const nextLvlGeneration = computed(() => (factory.value[0].model.generate_per_minute + 1) * factory.value[0].level);
-        const nextLvlCost = computed(() => factory.value[0].level ** factory.value[0].model.upgrade_coef);
+        const inventoryResources = computed(() => userInventory.value.inventory_resources.quantity);
+        const generation = computed(() => factory.value.model.generate_per_minute * factory.value.level);
+        const nextLvlGeneration = computed(() => (factory.value.model.generate_per_minute) * (factory.value.level + 1));
+        const nextLvlCost = computed(() => factory.value.level ** factory.value.model.upgrade_coef);
         const show = ref(false)
 
         const levelUp = () => {
-            gameStore.factoryLevelUp(factory.value[0].id)
+            gameStore.factoryLevelUp(factory.value.id)
+
             show.value = false
         }
         const levelUpModal = () => {
@@ -104,6 +105,7 @@ export default defineComponent({
     border-width: thin;
     border-radius: 15px;
     box-shadow: 0px 0px 5px black;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;

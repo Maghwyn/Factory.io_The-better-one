@@ -29,7 +29,6 @@ export default defineComponent({
 		const inventory = computed(() => userStore.inventory);
 		const user = computed(() => userStore.user);
 		const priceFactoryLimit = computed(() => userStore.nextFactoryPrice);
-		console.log(priceFactoryLimit)
 
 		watch(priceFactoryLimit, val => {
 			console.log(val)
