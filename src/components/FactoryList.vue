@@ -1,5 +1,5 @@
 <template>
-    <div class="box-factory-card shadow-xl">
+    <div class="box-factory-card">
         <div class="w-full flex justify-between filterDiv">
 
             <!-- <DropdownFilter></DropdownFilter> -->
@@ -258,7 +258,6 @@ export default defineComponent({
 }
 
 .box-factory-card {
-    width: 60%;
     border-style: solid;
     border-color: rgb(94, 94, 94);
     background-color: white;
@@ -266,8 +265,7 @@ export default defineComponent({
     border-width: thin;
     border-radius: 15px;
     justify-content: center;
-    margin-left: 5%;
-    min-height: 80vh;
+    min-height: 100%;
 }
 
 .filterDiv {

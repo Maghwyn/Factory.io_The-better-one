@@ -66,7 +66,6 @@ export default defineComponent({
         const userData = computed(() => props.user);
         const priceFactoryLimit = computed(() => userStore.nextFactoryPrice);
         userStore.checkPriceFactoryLimit();
-        setInterval(userStore.getMyInventory(), 30000);
 
         const upgradeFactoryLimit = () => {
             userStore.buyFactoryLimit();
@@ -131,7 +130,7 @@ export default defineComponent({
     gap: 1.5rem;
     background-color: white;
     flex: 1;
-    
+
     &-separator {
         height: 1px;
         width: 100%;

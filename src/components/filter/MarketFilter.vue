@@ -1,10 +1,6 @@
 <template>
 	<div class="market-filter">
-		<div 
-			v-for="(resource, key) in resources"
-			:key="key"
-			:class="resource.id === active ? 'active' : ''"
-		>
+		<div v-for="(resource, key) in resources" :key="key" :class="resource.id === active ? 'active' : ''">
 			<button @click="filterByResource(resource)">{{ resource.name }}</button>
 		</div>
 	</div>
@@ -26,7 +22,7 @@ export default defineComponent({
 		const tradeFilterId = computed(() => marketStore.filterById);
 
 		const filterByResource = (resource) => {
-			if(tradeFilterId.value === resource.id) {
+			if (tradeFilterId.value === resource.id) {
 				marketStore.setTradeFilter(-1);
 				active.value = -1;
 			}
@@ -55,9 +51,6 @@ export default defineComponent({
 	flex-flow: wrap row;
 	flex: 1 0;
 	background-color: white;
-	overflow-y: scroll;
-	max-height: 423.517px;
-
 	border-radius: 15px;
 	box-shadow: 0px 0px 5px black;
 	padding: 20px 20px;

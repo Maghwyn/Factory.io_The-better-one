@@ -63,7 +63,7 @@ export default defineComponent({
 	}
 
 	&-dashboard {
-		height: 100%;
+		max-height: 100%;
 		display: flex;
 		flex-direction: column;
 		flex: 1 0;
