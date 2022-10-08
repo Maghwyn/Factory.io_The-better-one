@@ -132,16 +132,19 @@ export const useMarketStore = defineStore('market', {
 			const res = await deleteOneTrade(tradeId);
 			if(res?.response !== undefined) return;
 
-			let tradeIndex = -1;
 			for(let n = 0; n < this.userTrades.length ; n++) {
 				const trade = this.userTrades[n];
 				if(trade.id === tradeId) {
-					tradeIndex = n;
+					this.userTrades.splice(n, 1);
 				}
 			}
 
-			if(tradeIndex === - 1) return;
-			this.userTrades.splice(tradeIndex, 1);
+			for(let x = 0; x < this.marketTrades.length; x++) {
+				const trade = this.marketTrades[x];
+				if(trade.id === tradeId) {
+					this.marketTrades.splice(x, 1);
+				}
+			}
 		},
 		async buyOfferTrade(tradeId, quantity) {
 			const res = await buyOneTrade(tradeId, quantity);
