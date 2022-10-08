@@ -147,7 +147,17 @@ export const useMarketStore = defineStore('market', {
 			const res = await buyOneTrade(tradeId, quantity);
 			if(res?.response !== undefined) return;
 
-			console.log(res);
+			for(let n = 0; n < this.marketTrades.length; n++) {
+				const trade = this.marketTrades[n];
+				if(trade.id === tradeId) {
+					const newQtt = trade.quantity - quantity;
+
+					if(newQtt < 1) this.marketTrades.splice(n, 1);
+					else this.marketTrades[n].quantity =  newQtt;
+
+					break;
+				}
+			}
 		},
 		setPagePagination(n_page) {
 			this.paginationPage = n_page;
