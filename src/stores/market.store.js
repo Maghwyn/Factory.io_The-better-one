@@ -66,8 +66,13 @@ export const useMarketStore = defineStore('market', {
 			const perPage = state.paginationPerPage;
 			const currentPage = state.paginationPage;
 			const trades = state.filteredTrades;
+			let tradesOnPage = trades.slice((currentPage - 1) * perPage, currentPage * perPage);
+			if(tradesOnPage.length === 0 && currentPage > 1) {
+				tradesOnPage = trades.slice((currentPage - 2) * perPage, currentPage * perPage)
+				state.paginationPage = state.paginationPage - 1;
+			}
 
-			return trades.slice((currentPage - 1) * perPage, currentPage * perPage);
+			return tradesOnPage;
 		},
 		getFilterById: state => {
 			return state.filterById;
