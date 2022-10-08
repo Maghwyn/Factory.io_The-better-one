@@ -9,6 +9,7 @@
     <div class="div_level">
       <span class="level">Lv. {{level}}</span>
     </div>
+    <img :src="fullResource.image_url" width="100" alt="" class="top-notch-img">
   </div>
 </template>
 
@@ -42,6 +43,12 @@
   justify-content: space-between;
 
 }
+
+.top-notch-img {
+  top: -20vh;
+  left: 10vh;
+  position: relative;
+}
 </style>
 
 
@@ -51,7 +58,8 @@
 <script>
 
 import { useGameStore } from '@/stores/game.store';
-import { ref, defineComponent } from 'vue';
+import { useResourceStore } from '@/stores/resource.store';
+import { ref, defineComponent, computed } from 'vue';
 
 export default defineComponent({
   props: {
@@ -70,14 +78,17 @@ export default defineComponent({
   },
   setup(props) {
     const gameStore = useGameStore();
+    const resourceStore = useResourceStore();
     const resource_generation = props.level * props.resource_prod
     const factories = ref([]);
+    const fullResource = computed(() => resourceStore.resources.find(r => r.name == props.resource_type))
 
     const createFactory = async () => {
       gameStore.createFactory(1);
       factories.value = gameStore.factories
     }
     return {
+      fullResource,
       createFactory,
       resource_generation
     }

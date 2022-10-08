@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="lvl_up_div">
-            <p>Next lvl cost : {{nextLvlCost}} {{nameResource}}</p>
+            <p>Next lvl cost : {{nextLvlCost}} {{upnameResource}}</p>
             <button @click="levelUpModal()" type="button"
                 class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2 text-center mr-2 mb-2 mt-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 h-9">Level
                 up</button>
@@ -62,6 +62,7 @@ export default defineComponent({
 
         const factory = computed(() => gameStore?.actualFactory);
         const nameResource = computed(() => factory?.value?.model?.resource.name);
+        const upnameResource = computed(() => factory?.value?.model?.upgrade_resource.name);
         const userInventory = computed(() => userStore?.inventory);
         const inventoryResources = computed(() => userInventory?.value?.inventory_resources?.quantity);
         const generation = computed(() => factory?.value?.model?.generate_per_minute * factory?.value?.level);
@@ -83,6 +84,7 @@ export default defineComponent({
         return {
             factory,
             nameResource,
+            upnameResource,
             generation,
             nextLvlCost,
             nextLvlGeneration,
