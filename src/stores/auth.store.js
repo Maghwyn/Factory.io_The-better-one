@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
 			const userStore = useUserStore();
 			userStore.setUser(res.data);
 			this.isAuth = true;
-			this.isAdmin = res.data.username === "kevnumber" ? true : false;
+			this.isAdmin = res.data.role === 1 ? true : false;
 		},
 		async tryAutoLogin() {
 			if(localStorage.token !== undefined) {

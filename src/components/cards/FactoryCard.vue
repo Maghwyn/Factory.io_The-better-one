@@ -9,7 +9,7 @@
     <div class="div_level">
       <span class="level">Lv. {{level}}</span>
     </div>
-    <img :src="fullResource.image_url" width="100" alt="" class="top-notch-img">
+    <img :src="fullResource.image_url" width="64" alt="" class="top-notch-img">
   </div>
 </template>
 
