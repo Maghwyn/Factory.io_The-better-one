@@ -79,7 +79,7 @@ export default defineComponent({
   setup(props) {
     const gameStore = useGameStore();
     const resourceStore = useResourceStore();
-    const resource_generation = props.level * props.resource_prod
+    const resource_generation = computed(() => props.level * props.resource_prod);
     const factories = ref([]);
     const fullResource = computed(() => resourceStore.resources.find(r => r.name == props.resource_type))
 
