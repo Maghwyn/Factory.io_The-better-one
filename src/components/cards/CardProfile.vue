@@ -10,7 +10,7 @@
 				</span>
 			</div>
 			<div>
-				<span class="coin">Income : {{ user.income }}</span>
+				<span class="coin">Income : {{ calculatedUserIncome }}</span>
 				<span class="coin">Money : {{ inventory.money }}</span>
 				<span class="factory">Factories : {{ factoLen }}</span>
 				<span class="factory">Factory limit : {{ priceFactoryLimit.factory_limit }}</span>
@@ -22,12 +22,15 @@
 <script>
 import { defineComponent, computed, watch } from "vue";
 import { useUserStore } from "@/stores/user.store";
+import { useGameStore } from "@/stores/game.store"
 
 export default defineComponent({
 	setup() {
 		const userStore = useUserStore();
+		const gameStore = useGameStore();
 		const inventory = computed(() => userStore.inventory);
 		const user = computed(() => userStore.user);
+		const calculatedUserIncome = computed(() => gameStore.calculatedUserIncome);
 		const priceFactoryLimit = computed(() => userStore.nextFactoryPrice);
 		const factoLen = computed(() => user?.value?.factories?.length);
 
@@ -40,6 +43,7 @@ export default defineComponent({
 			inventory,
 			factoLen,
 			user,
+			calculatedUserIncome,
 		}
 	}
 })

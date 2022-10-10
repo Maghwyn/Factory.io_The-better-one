@@ -13,6 +13,11 @@ const gameStoreDefaultState = () => {
 
 export const useGameStore = defineStore('game', {
 	state: () => gameStoreDefaultState(),
+	getters: {
+		calculatedUserIncome: state => {
+			return state.factories.reduce((f, c) => {return f + c.level}, 0)
+		}
+	},
 	actions: {
 		async createFactory(factoryModelId) {
 			const userStore = useUserStore();
