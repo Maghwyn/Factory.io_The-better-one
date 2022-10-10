@@ -22,6 +22,10 @@ export const levelUpOneFactory = async (factoryId) => {
 	return await http.post(`/factories/${factoryId}/levelup`);
 };
 
+export const levelUpOneFactoryMax = async(factoryId) => {
+	return await http.post(`/factories/${factoryId}/levelup-max`);
+}
+
 export const getAllModels = async () => {
 	return await http.get('/factories/models');
 };

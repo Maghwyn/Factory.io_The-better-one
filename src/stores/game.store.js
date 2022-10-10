@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { pick } from '@/scripts/helpers/pick.js';
-import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, levelUpOneFactory, getAllModels } from '@/API/factory.req';
+import { createOneFactory, deleteOneFactory, getAllFactories, getOneFactory, levelUpOneFactory, getAllModels, levelUpOneFactoryMax } from '@/API/factory.req';
 import { useUserStore } from './user.store';
 
 const gameStoreDefaultState = () => {
@@ -69,6 +69,34 @@ export const useGameStore = defineStore('game', {
 		},
 		async factoryLevelUp(factoryId) {
 			const res = await levelUpOneFactory(factoryId);
+			if(res?.response !== undefined) return;
+
+			const factory = res.data;
+			if(!factory) return;
+
+			let factoryIndex = -1;
+			for(let n = 0; n < this.factories.length ; n++) {
+				const factory = this.factories[n];
+				if(factory.id === factoryId) {
+					factoryIndex = n;
+				}
+			}
+
+			if(factoryIndex === - 1) return;
+			this.factories[factoryIndex] = factory;
+			this.actualFactory = factory
+			// Perhaps update the user factory at the same time, or dynamically.
+			const userStore = useUserStore();
+			const userFactories = userStore.user.factories;
+			userFactories.forEach(element => {
+				if(element.id === factory.id){
+					element = factory
+				}
+			});
+		},
+
+		async factoryLevelUpMax(factoryId) {
+			const res = await levelUpOneFactoryMax(factoryId);
 			if(res?.response !== undefined) return;
 
 			const factory = res.data;

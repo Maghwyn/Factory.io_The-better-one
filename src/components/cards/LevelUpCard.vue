@@ -21,6 +21,13 @@
                 class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2 text-center mr-2 mb-2 mt-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 h-9">Level
                 up</button>
         </div>
+        <div class="lvl_up_max">
+            <button @click="levelUpMax()" type="button"
+                class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2 text-center mr-2 mb-2 mt-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 h-9"
+            >
+                Max levelup
+            </button>
+        </div>
     </div>
 
 
@@ -75,6 +82,12 @@ export default defineComponent({
             userStore.getMyInventory()
             show.value = false
         }
+
+        const levelUpMax = () => {
+            gameStore.factoryLevelUpMax(factory.value.id)
+            userStore.getMyInventory();
+        }
+
         const levelUpModal = () => {
             show.value = true
         }
@@ -89,6 +102,7 @@ export default defineComponent({
             nextLvlCost,
             nextLvlGeneration,
             levelUp,
+            levelUpMax,
             show,
             levelUpModal,
             cancel,
